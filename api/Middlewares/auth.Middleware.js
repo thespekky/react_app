@@ -7,11 +7,11 @@ exports.auth = async (req, res, next) => {
       ? req.headers.authtoken
       : req.headers.authorization.split(" ")[1];
     if (!authtoken) {
-      res.send({ message: "Nincs token", success: false });
+      return res.send({ message: "Nincs token", success: false });
     }
     const data = jwt.verify(authtoken, process.env.ACCESS_TOKEN_KEY);
     if (!data) {
-      res.send({ message: "Hibás token", success: false });
+      return res.send({ message: "Hibás token", success: false });
     }
     const user = await sequelize.query(
       "SELECT ID, username, name, email,admin FROM users WHERE email=:Email",
@@ -21,12 +21,12 @@ exports.auth = async (req, res, next) => {
       }
     );
     if (!user) {
-      res.send({ message: "Nincs ilyen felhasználó", success: false });
+      return res.send({ message: "Nincs ilyen felhasználó", success: false });
     }
     req.user = user;
     next();
   } catch (e) {
     console.log(e);
-    res.send({ message: "Kritikus hiba" });
+    return res.send({ message: "Kritikus hiba", success: false });
   }
 };
