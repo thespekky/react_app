@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
-const autchContext = createContext();
+const AutchContext = createContext();
 
-export default AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const cookies = new Cookies();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUser, setLoggedUser] = useState({
@@ -43,11 +43,11 @@ export default AuthProvider = ({ children }) => {
     }
   };
   return (
-    <autchContext.Provider value={{ login, logout, isLoggedIn, loggedUser }}>
+    <AutchContext.Provider value={{ login, logout, isLoggedIn, loggedUser }}>
       {children}
-    </autchContext.Provider>
+    </AutchContext.Provider>
   );
 };
 export const useAuth = () => {
-  return useContext(autchContext);
+  return useContext(AutchContext);
 };
