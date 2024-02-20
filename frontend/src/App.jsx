@@ -4,6 +4,8 @@ import { AuthProvider } from "./Components/AuthContext/AuthContext.jsx";
 import { useAuth } from "./Components/AuthContext/AuthContext.jsx";
 import { AlertPRovider } from "./Components/Alert/alert.context.jsx";
 import Navbar from "./Components/Navbar/Navbar.jsx";
+import { Route, Routes } from "react-router-dom";
+import Home from "./Components/Pages/Home.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -13,6 +15,9 @@ function App() {
       <AuthProvider>
         <AlertPRovider>
           <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+          </Routes>
           <div>
             <p>Hello Vite + React!</p>
             <p>
