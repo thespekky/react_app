@@ -5,7 +5,7 @@ import { useAuth } from "./Components/AuthContext/AuthContext.jsx";
 import { AlertPRovider } from "./Components/Alert/alert.context.jsx";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import { Route, Routes } from "react-router-dom";
-import Home from "./Components/Pages/Home.jsx";
+import Home from "./Components/Pages/Home/Home.jsx";
 
 function App() {
   const [count, setCount] = useState(0);

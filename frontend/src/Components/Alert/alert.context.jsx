@@ -15,7 +15,7 @@ export const AlertPRovider = ({ children }) => {
     }, 5000);
   }, [alert]);
   return (
-    <AlertContext.Provider value={{ alert, setAlert }}>
+    <AlertContext.Provider value={[alert, setAlert]}>
       {children}
     </AlertContext.Provider>
   );

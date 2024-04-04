@@ -24,13 +24,22 @@ export default function Home() {
     if (cookies.get("userData")) {
     }
   }, []);
+  function alerts() {
+    showAlert("Belépve", "success");
+  }
   return (
     <>
       <Alert />
       <h1>Home</h1>
-      {isLoggedIn
-        ? showAlert("Belépve", "success")
-        : showAlert("Nincs belépve", "warning")}
+      {isLoggedIn}
+      <button
+        type="button"
+        onClick={() => {
+          showAlert("Belépve", "success");
+        }}
+      >
+        Belépve
+      </button>
     </>
   );
 }
