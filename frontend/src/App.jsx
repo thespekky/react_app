@@ -7,10 +7,9 @@ import { AlertPRovider } from "./Components/Alert/alert.context.jsx";
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Components/Pages/Home/home.jsx";
+import Reg from "./Components/Pages/Reg/reg.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <AuthProvider>
@@ -18,18 +17,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />}></Route>
+            <Route path="/reg" element={<Reg />}></Route>
           </Routes>
-          <div>
-            <p>Hello Vite + React!</p>
-            <p>
-              <button
-                type="button"
-                onClick={() => setCount((count) => count + 1)}
-              >
-                count is: {count}
-              </button>
-            </p>
-          </div>
         </AlertPRovider>
       </AuthProvider>
     </>

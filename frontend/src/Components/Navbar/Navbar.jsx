@@ -13,7 +13,11 @@ export default function Navbar() {
           {isLoggedIn ? <CostumeLink to="/valami">valami</CostumeLink> : <></>}
         </ul>
         <ul className="p-0 m-0 list-none flex gap-3.5">
-          {<CostumeLink to="/valami">valami</CostumeLink>}
+          {!isLoggedIn ? (
+            <CostumeLink to="/Reg">Regisztráció</CostumeLink>
+          ) : (
+            <></>
+          )}
         </ul>
       </nav>
     </>
