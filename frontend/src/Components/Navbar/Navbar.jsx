@@ -12,6 +12,9 @@ export default function Navbar() {
         <ul className="p-0 m-0 list-none flex gap-3.5">
           {isLoggedIn ? <CostumeLink to="/valami">valami</CostumeLink> : <></>}
         </ul>
+        <ul className="p-0 m-0 list-none flex gap-3.5">
+          {<CostumeLink to="/valami">valami</CostumeLink>}
+        </ul>
       </nav>
     </>
   );

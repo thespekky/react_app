@@ -24,9 +24,6 @@ export default function Home() {
     if (cookies.get("userData")) {
     }
   }, []);
-  function alerts() {
-    showAlert("Belépve", "success");
-  }
   return (
     <>
       <Alert />
