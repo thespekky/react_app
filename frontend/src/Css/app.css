@@ -6,3 +6,24 @@
   padding: 0 1rem;
   gap: 2rem;
 }
+.regdiv {
+  position: static;
+  width: 100%;
+  height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.regdiv form {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5%;
+}
+.regdiv form input {
+  height: 30px;
+  border-radius: 25px;
+}
