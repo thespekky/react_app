@@ -5,6 +5,7 @@ import { useAuth } from "../../AuthContext/AuthContext";
 import { Alert } from "../../Alert/Alert";
 import AlertContext from "../../Alert/alert.context";
 import { useNavigate } from "react-router-dom";
+import { Register } from "../../FetchData/fetchData";
 const cookies = new Cookies();
 export default function Reg() {
   const { isLoggedIn } = useAuth();
