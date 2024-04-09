@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+:root {
+  --hover_color: rgb(73, 73, 73);
+}
 .navbar {
   padding: 0 1rem;
   gap: 0px;
@@ -37,4 +39,7 @@
     flex-wrap: wrap;
     align-content: center;
   }
+}
+.navbar > div:hover {
+  background-color: var(--hover_color);
 }

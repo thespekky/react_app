@@ -6,7 +6,7 @@ export default function Navbar() {
   let iisLoggedIn = true;
   return (
     <>
-      <nav className="navbar bg-stone-800 text-white grid items-center ">
+      <nav className="navbar bg-stone-800 text-white  grid items-center ">
         <div className="">
           <Link to={"/"} className="text-5x1 title ">
             Fő oldal

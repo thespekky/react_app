@@ -17,11 +17,11 @@ const severityStyles = {
   },
   info: {
     color: "#055160",
-    background: "cff4fc",
+    background: "#cff4fc",
   },
   warning: {
     color: "#664d03",
-    background: "fff3cd",
+    background: "#fff3cd",
   },
   danger: {
     color: "#842029",
