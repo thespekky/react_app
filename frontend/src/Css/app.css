@@ -4,7 +4,7 @@
 
 .navbar {
   padding: 0 1rem;
-  gap: 2rem;
+  gap: 0px;
 }
 .regdiv {
   position: static;
@@ -26,4 +26,15 @@
 .regdiv form input {
   height: 30px;
   border-radius: 25px;
+}
+@media (max-width: 768px) {
+  .navbar {
+    display: flex;
+    height: auto;
+    gap: 5px;
+    padding-top: 1px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+  }
 }
