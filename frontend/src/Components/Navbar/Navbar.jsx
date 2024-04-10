@@ -6,14 +6,14 @@ export default function Navbar() {
   let iisLoggedIn = true;
   return (
     <>
-      <nav className="navbar bg-stone-800 text-white  grid items-center ">
+      <nav className="navbar bg-stone-800 text-white grid items-center ">
         <div className="">
-          <Link to={"/"} className="text-5x1 title ">
+          <Link to={"/"} className="text-5x1 title flex justify-start ">
             Fő oldal
           </Link>
         </div>
         <div className="">
-          <ul className="p-0 m-0 list-none flex max-lg:gap-0 gap-3.5">
+          <ul className="p-0 m-0 list-none flex justify-center max-lg:gap-0 gap-3.5">
             {iisLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
@@ -22,7 +22,7 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="">
-          <ul className="p-0 m-0 list-none row-span-3 col-span-1 flex max-lg:gap-0 gap-3.5">
+          <ul className="p-0 m-0 list-none row-span-3 col-span-1 flex justify-center max-lg:gap-0 gap-3.5">
             {iisLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
@@ -31,7 +31,7 @@ export default function Navbar() {
           </ul>
         </div>
         <div className=" ">
-          <ul className="p-0 m-0 list-none max-lg:gap-0 gap-3.5">
+          <ul className="p-0 m-0 list-none max-lg:gap-0 flex justify-center gap-3.5">
             {iisLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
@@ -39,14 +39,7 @@ export default function Navbar() {
             )}
           </ul>
         </div>
-        <ul className="p-0 m-0 list-none flex  max-lg:gap-0 gap-3.5">
-          {iisLoggedIn ? <CostumeLink to="/valami">valami</CostumeLink> : <></>}
-        </ul>
-        <ul className="p-0 m-0 list-none flex max-lg:gap-0 gap-3.5">
-          {iisLoggedIn ? <CostumeLink to="/valami">valami</CostumeLink> : <></>}
-        </ul>
-
-        <ul className="p-0 m-0 list-none max-lg:col-start-9 col-start-10">
+        <ul className="p-0 m-0 list-none max-lg:col-start-9 flex justify-end col-start-10">
           {!isLoggedIn ? (
             <CostumeLink to="/Reg">Regisztráció</CostumeLink>
           ) : (

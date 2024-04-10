@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-  --hover_color: rgb(73, 73, 73);
+  --hover_bgcolor: rgb(73, 73, 73);
+  --hover_color: rgb(192, 243, 239);
 }
 .navbar {
   padding: 0 1rem;
@@ -41,5 +42,13 @@
   }
 }
 .navbar > div:hover {
-  background-color: var(--hover_color);
+  color: var(--hover_color);
+}
+.navbar > ul:hover {
+  color: var(--hover_color);
+}
+.active {
+  background-color: #696969;
+  border-radius: 25px;
+  height: 25px;
 }

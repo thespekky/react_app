@@ -65,7 +65,7 @@ export default function Reg() {
     <>
       <Alert />
       <div className="regdiv">
-        <form onSubmit={Reg} className="bg-gray-600 w-96 p-3 reg-form-height">
+        <form onSubmit={Reg} className=" bg-slate-500 w-96 p-3">
           <label htmlFor="">Email</label>
           <br />
           <input type="email" className="p-4" name="email" />
