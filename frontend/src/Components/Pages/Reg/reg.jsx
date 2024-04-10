@@ -40,7 +40,7 @@ export default function Reg() {
       showAlert("A jelszó nem egyezik", "warning");
       return;
     }
-    if (!/^(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(FormData.get("password"))) {
+    if (!/^(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(formData.get("password"))) {
       showAlert(
         "A jelszó nem tartalmaz 8 karkaraktert vagy kicsi vagy nagybetűt",
         "warning"
@@ -55,8 +55,10 @@ export default function Reg() {
       Felhnev: formData.get("Felhnev"),
     };
     const data = await Register("/reg", body);
-    if (data) {
-      showAlert("Regisztráció sikeres", "success");
+    if (data.success) {
+      showAlert(data.message, "success");
+    } else {
+      showAlert(data.message, "danger");
     }
   }
   return (
