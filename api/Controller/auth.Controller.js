@@ -12,7 +12,6 @@ exports.login = async (req, res) => {
         type: QueryTypes.SELECT,
       }
     );
-    console.log(user.length);
     if (user.length == 0) {
       return res.send({ message: "Nincs ilyen felhasználó", success: false });
     }
