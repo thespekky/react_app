@@ -40,11 +40,7 @@ export default function Navbar() {
           </ul>
         </div>
         <ul className="p-0 m-0 list-none max-lg:col-start-9 flex justify-end col-start-10">
-          {!isLoggedIn ? (
-            <CostumeLink to="/Reg">Regisztráció</CostumeLink>
-          ) : (
-            <></>
-          )}
+          {!isLoggedIn ? <CostumeLink to="/login">Belépés</CostumeLink> : <></>}
         </ul>
       </nav>
     </>

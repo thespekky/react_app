@@ -8,6 +8,7 @@ import Navbar from "./Components/Navbar/Navbar.jsx";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Components/Pages/Home/home.jsx";
 import Reg from "./Components/Pages/Reg/reg.jsx";
+import Login from "./Components/Pages/Login/login.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />}></Route>
+            <Route path="/login" element={<Login />}></Route>
             <Route path="/reg" element={<Reg />}></Route>
           </Routes>
         </AlertPRovider>

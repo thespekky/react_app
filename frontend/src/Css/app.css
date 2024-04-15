@@ -4,6 +4,7 @@
 :root {
   --hover_bgcolor: rgb(73, 73, 73);
   --hover_color: rgb(192, 243, 239);
+  --hover_color2: rgb(14, 164, 233);
 }
 .navbar {
   padding: 0 1rem;
@@ -42,10 +43,10 @@
   }
 }
 .navbar > div:hover {
-  color: var(--hover_color);
+  color: var(--hover_color2);
 }
 .navbar > ul:hover {
-  color: var(--hover_color);
+  color: var(--hover_color2);
 }
 .active {
   background-color: #696969;
