@@ -22,7 +22,7 @@ export async function Register(path, body) {
     return { message: e.message };
   }
 }
-export async function Login(path, body) {
+export async function LoginUser(path, body) {
   try {
     const response = await fetch(
       "http://localhost:" + import.meta.env.VITE_PORT + path,

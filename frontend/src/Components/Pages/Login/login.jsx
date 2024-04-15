@@ -5,10 +5,11 @@ import { useAuth } from "../../AuthContext/AuthContext";
 import { Alert } from "../../Alert/Alert";
 import AlertContext from "../../Alert/alert.context";
 import { useNavigate } from "react-router-dom";
-import { Register } from "../../FetchData/fetchData";
+import { LoginUser } from "../../FetchData/fetchData";
 const cookies = new Cookies();
 export default function Login() {
-  const { isLoggedIn } = useAuth();
+  const { login } = useAuth();
+  const { loggedUser, setUser } = useAuth();
   const navigate = useNavigate();
   const [, sertAlert] = useContext(AlertContext);
   const showAlert = (text, type) => {
@@ -22,15 +23,36 @@ export default function Login() {
       navigate("/");
     }
   }, []);
-  async function login(e) {
+  async function LoginForm(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
+    if (formData.get("email") === "" || formData.get("password") === "") {
+      showAlert("Nem adtál meg minden adatot", "warning");
+      return;
+    }
+    const body = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
+    const data = await LoginUser("/login", body);
+    if (data.success) {
+      login({
+        username: data.user[0].username,
+        name: data.user[0].name,
+        email: data.user[0].email,
+        admin: data.user[0].admin,
+        authtoken: data.token,
+      });
+    } else {
+      showAlert(data.message, "danger");
+    }
   }
   return (
     <>
       <Alert />
       <div className="regdiv">
-        <form onSubmit={login} className=" bg-slate-500 w-96 p-3">
+        <form onSubmit={LoginForm} className=" bg-slate-500 w-96 p-3">
           <label htmlFor="">Email</label>
           <br />
           <input type="email" className="p-4" name="email" />

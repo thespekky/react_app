@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const sequelize = require("../Models/dbModell");
+const { QueryTypes } = require("sequelize");
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -11,13 +12,14 @@ exports.login = async (req, res) => {
         type: QueryTypes.SELECT,
       }
     );
-    if (!user) {
+    console.log(user.length);
+    if (user.length == 0) {
       return res.send({ message: "Nincs ilyen felhasználó", success: false });
     }
     const token = jwt.sign(
       { email: req.body.email },
       process.env.ACCESS_TOKEN_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "1m" }
     );
     if (!token) {
       return res.send({
@@ -25,7 +27,6 @@ exports.login = async (req, res) => {
         success: false,
       });
     }
-
     return res.send({ token: token, success: true, user: user });
   } catch (e) {
     console.log(e);

@@ -8,19 +8,21 @@ export const AuthProvider = ({ children }) => {
   const cookies = new Cookies();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUser, setLoggedUser] = useState({
-    id: 0,
+    //id: 0,
     username: "",
     name: "",
     email: "",
+    admin: 0,
   });
   useEffect(() => {
     if (cookies.get("userData")) {
       setIsLoggedIn(true);
       setLoggedUser({
-        id: cookies.get("userData").id,
+        //id: cookies.get("userData").id,
         username: cookies.get("userData").username,
         name: cookies.get("userData").name,
         email: cookies.get("userData").email,
+        admin: cookies.get("userData").admin,
       });
     }
   }, []);
@@ -33,12 +35,26 @@ export const AuthProvider = ({ children }) => {
 
   const login = (datas) => {
     cookies.set("userData", datas, { path: "/" });
-    isLoggedIn(true);
+    setLoggedUser({
+      //id: datas.id,
+      username: datas.username,
+      name: datas.name,
+      email: datas.email,
+      admin: datas.admin,
+    });
+    setIsLoggedIn(true);
   };
   const logout = () => {
     if (isLoggedIn) {
       cookies.remove("userData", { path: "/" });
       setIsLoggedIn(false);
+      setLoggedUser({
+        //id: cookies.get("userData").id,
+        username: "",
+        name: "",
+        email: "",
+        admin: 0,
+      });
       navigate("/");
     }
   };
