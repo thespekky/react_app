@@ -43,7 +43,7 @@ exports.register = async (req, res) => {
         type: QueryTypes.SELECT,
       }
     );
-    if (!vane_user) {
+    if (vane_user.length != 0) {
       await t.rollback();
       return res.send({ message: "Van ilyen felhasználó", success: false });
     }

@@ -49,10 +49,13 @@ export default function Reg() {
     }
     const body = {
       email: formData.get("email"),
-      password: formData.get("password"),
-      Keresztnev: formData.get("Keresztnev"),
-      Vezeteknev: formData.get("Vezeteknev"),
-      Felhnev: formData.get("Felhnev"),
+      password: CryptoJS.SHA1(formData.get("password")).toString(),
+      name: (
+        formData.get("Keresztnev") +
+        " " +
+        formData.get("Vezeteknev")
+      ).trim(),
+      username: formData.get("Felhnev"),
     };
     const data = await Register("/reg", body);
     if (data.success) {
