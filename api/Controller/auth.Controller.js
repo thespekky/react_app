@@ -13,7 +13,7 @@ exports.login = async (req, res) => {
       }
     );
     if (user.length == 0) {
-      return res.send({ message: "Nincs ilyen felhasználó", success: false });
+      return res.send({ message: "Hibás jelszó vagy nincs ilyen felhasználó", success: false });
     }
     const token = jwt.sign(
       { email: req.body.email },

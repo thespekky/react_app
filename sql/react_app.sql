@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Feb 09. 11:50
+-- Létrehozás ideje: 2024. Jún 04. 18:28
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 8.0.1
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `react_app`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `kosarasok`
+--
+
+CREATE TABLE `kosarasok` (
+  `ID` int(11) NOT NULL,
+  `name` varchar(200) COLLATE utf8_hungarian_ci NOT NULL,
+  `bdate` date NOT NULL,
+  `team` varchar(200) COLLATE utf8_hungarian_ci NOT NULL,
+  `image` varchar(200) COLLATE utf8_hungarian_ci NOT NULL,
+  `introduction` varchar(200) COLLATE utf8_hungarian_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `kosarasok`
+--
+
+INSERT INTO `kosarasok` (`ID`, `name`, `bdate`, `team`, `image`, `introduction`) VALUES
+(1, 'Valaki Valami', '2022-10-18', 'Csapat1', '', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta error, placeat illo veniam iste sunt maxime eaque repellendus! Perferendis natus saepe ad veritatis sit dolores voluptatibus harum elige'),
+(2, 'Valaki Valami 1', '2002-10-18', 'CSapat2', '', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta error, placeat illo veniam iste sunt maxime eaque repellendus! Perferendis natus saepe ad veritatis sit dolores voluptatibus harum elige'),
+(3, 'Valaki Valami 2', '2012-10-18', 'CSapat3', '', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta error, placeat illo veniam iste sunt maxime eaque');
 
 -- --------------------------------------------------------
 
@@ -42,11 +66,20 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`ID`, `username`, `name`, `email`, `password`, `admin`) VALUES
 (1, 'user_name', 'Name Name', 'usermail@gmail.com', 'secret', 0),
-(2, 'admin_name', 'Admin Admin', 'admin@gmail.com', 'admin', 1);
+(2, 'admin_name', 'Admin Admin', 'admin@gmail.com', 'f74b1bfad7e8395aa72779cff01e19e3c317fc09', 1),
+(5, 'asdasd', 'asd  asd2', 'teszt1@teszt1.teszt1', 'Teszt1@teszt1.teszt1', 0),
+(8, 'teszt1@teszt1.teszt1', 'teszt1@teszt1.teszt1 teszt1@teszt1.teszt1', 'teszt1@teszt1.teszt112121', 'e0ae94f6fb0b5c3e09cff5d1bf2cc523e041ee36', 0),
+(9, 'asdad@asd.com', 'asdad@asd.com asdad@asd.com', 'asdad@asd.com', 'f74b1bfad7e8395aa72779cff01e19e3c317fc09', 0);
 
 --
 -- Indexek a kiírt táblákhoz
 --
+
+--
+-- A tábla indexei `kosarasok`
+--
+ALTER TABLE `kosarasok`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- A tábla indexei `users`
@@ -59,10 +92,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT a táblához `kosarasok`
+--
+ALTER TABLE `kosarasok`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT a táblához `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

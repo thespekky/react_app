@@ -2,8 +2,6 @@ const sequelize = require("../Models/dbModell");
 const { QueryTypes } = require("sequelize");
 exports.getusers = async (req, res) => {
   try {
-    console.log(req.user);
-    console.log(req.user[0].admin);
     if (req.user[0].admin == 1) {
       const users = await sequelize.query(
         "SELECT ID, username, name, email,admin FROM users",
