@@ -43,6 +43,7 @@ export default function Login() {
         email: data.user[0].email,
         admin: data.user[0].admin,
         authtoken: data.token,
+        refreshtoken: data.refreshtoken,
       });
     } else {
       showAlert(data.message, "danger");

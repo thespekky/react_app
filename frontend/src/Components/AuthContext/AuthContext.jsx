@@ -47,6 +47,7 @@ export const AuthProvider = ({ children }) => {
   };
   const logout = () => {
     if (isLoggedIn) {
+      Logout({ email: loggedUser.email });
       cookies.remove("userData", { path: "/" });
       setIsLoggedIn(false);
       setLoggedUser({
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children }) => {
         email: "",
         admin: 0,
       });
-      Logout({email: loggedUser.email});
+
       navigate("/");
     }
   };
@@ -66,6 +67,6 @@ export const AuthProvider = ({ children }) => {
     </AutchContext.Provider>
   );
 };
-export const useAuth = () => {
+export const  useAuth = () => {
   return useContext(AutchContext);
 };

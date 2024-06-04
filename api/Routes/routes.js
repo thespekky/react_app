@@ -9,5 +9,6 @@ routes.post("/login", authController.login);
 routes.post("/reg", authController.register);
 routes.get("/getusers", [authMiddleware.auth], adminController.getusers);
 routes.post("/logout", authController.logout);
+routes.post("/refreshtoken", authController.refreshtoken);
 
 module.exports = routes;

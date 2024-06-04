@@ -1,9 +1,39 @@
 import { Link, useResolvedPath, useMatch, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext/AuthContext";
 import { useEffect } from "react";
+import { Refreshtoken } from "../FetchData/fetchData";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 export default function Navbar() {
   const { isLoggedIn, logout } = useAuth();
   let iisLoggedIn = true;
+  const TokenValidálás = async () => {
+    //console.log(cookies.get("userData"));
+    if (cookies.get("userData") != null) {
+      //console.log(cookies.get("userData").authtoken);
+      let body = {
+        refreshtoken: cookies.get("userData").refreshtoken,
+        authtoken: cookies.get("userData").authtoken,
+        email: cookies.get("userData").email,
+      };
+      //console.log(body);
+      const data = await Refreshtoken(body);
+      //console.log(data);
+      if (data.success && data.changed) {
+        const userDataCookie = cookies.get("userData");
+        //console.log(userDataCookie);
+        userDataCookie.authtoken = data.token;
+        cookies.set("userData", userDataCookie, { path: "/" });
+      } else {
+        // console.log(data.message);
+      }
+      //console.log(cookies.get("userData").authtoken);
+    }
+  };
+  useEffect(() => {
+    TokenValidálás();
+  }, []);
+
   return (
     <>
       <nav className="navbar bg-stone-800 text-white grid items-center ">

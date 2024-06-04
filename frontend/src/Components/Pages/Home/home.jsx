@@ -17,6 +17,7 @@ export default function Home() {
   const [, sertAlert] = useContext(AlertContext);
   const [data, setData] = useState([]);
   const GetData = async () => {
+    setTimeout(() => {}, 100);
     const data = await GetAllData("/getusers");
     if (data.success) {
       setData(data.users);

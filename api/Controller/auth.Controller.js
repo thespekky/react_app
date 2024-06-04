@@ -54,7 +54,12 @@ exports.login = async (req, res) => {
     }
     await t.commit();
 
-    return res.send({ token: token, success: true, user: user });
+    return res.send({
+      token: token,
+      refreshtoken: refreshToken,
+      success: true,
+      user: user,
+    });
   } catch (e) {
     console.log(e);
     return res.send({ message: "Kritikus hiba", success: false });
@@ -65,7 +70,7 @@ exports.logout = async (req, res) => {
     const { email } = req.body;
     const t = await sequelize.transaction();
 
-    //a tpye DLETE miatt nem ad vissza értéket
+    //a tpye DELETE miatt nem ad vissza értéket
     const tokendelete = await sequelize.query(
       "DELETE FROM refreshtoken WHERE email=:Email",
       {
@@ -89,6 +94,70 @@ exports.logout = async (req, res) => {
   } catch (e) {
     console.log(e);
     return res.send({ message: "Kritikus hiba", success: false });
+  }
+};
+exports.refreshtoken = async (req, res) => {
+  let token;
+  let email;
+  try {
+    email = req.body.email;
+    //console.log(email);
+    const { refreshtoken, authtoken } = req.body;
+    //console.log(req.body);
+    if (!refreshtoken || !authtoken) {
+      return res.send({ message: "Nincs token", success: false });
+    }
+    const tokenvalidálás = jwt.verify(authtoken, process.env.ACCESS_TOKEN_KEY);
+    //console.log(tokenvalidálás);
+    if (tokenvalidálás) {
+      return res.send({ token: authtoken, success: true, changed: false });
+    }
+    const data = jwt.verify(refreshtoken, process.env.REFRESS_TOKEN_KEY);
+    if (!data) {
+      return res.send({ message: "Hibási refreshtoken", success: false });
+    }
+    const reftoken = await sequelize.query(
+      "SELECT email,refreshtoken FROM refreshtoken WHERE refreshtoken=:Token",
+      {
+        replacements: { Token: refreshtoken },
+        type: QueryTypes.SELECT,
+      }
+    );
+    if (!reftoken) {
+      return res.send({
+        message: "Nincs ilyen refreshtoken az adatbázisban",
+        success: false,
+      });
+    }
+    token = jwt.sign({ email: email }, process.env.ACCESS_TOKEN_KEY, {
+      expiresIn: "20m",
+    });
+    if (!token) {
+      return res.send({
+        message: "Hiba a token generálása során",
+        success: false,
+      });
+    }
+
+    return res.send({ token: token, success: true });
+  } catch (e) {
+    console.log(e);
+    token = jwt.sign({ email: email }, process.env.ACCESS_TOKEN_KEY, {
+      expiresIn: "20m",
+    });
+    if (!token) {
+      return res.send({
+        message: "Hiba a token generálása során",
+        success: false,
+      });
+    }
+    //console.log("az új token: " + token);
+    return res.send({
+      message: "az új token:",
+      token: token,
+      success: true,
+      changed: true,
+    });
   }
 };
 exports.register = async (req, res) => {
