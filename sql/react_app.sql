@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Jún 04. 18:28
+-- Létrehozás ideje: 2024. Jún 04. 20:28
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 8.0.1
 
@@ -48,6 +48,17 @@ INSERT INTO `kosarasok` (`ID`, `name`, `bdate`, `team`, `image`, `introduction`)
 -- --------------------------------------------------------
 
 --
+-- Tábla szerkezet ehhez a táblához `refreshtoken`
+--
+
+CREATE TABLE `refreshtoken` (
+  `email` varchar(200) COLLATE utf8_hungarian_ci NOT NULL,
+  `refreshtoken` text COLLATE utf8_hungarian_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tábla szerkezet ehhez a táblához `users`
 --
 
@@ -80,6 +91,12 @@ INSERT INTO `users` (`ID`, `username`, `name`, `email`, `password`, `admin`) VAL
 --
 ALTER TABLE `kosarasok`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- A tábla indexei `refreshtoken`
+--
+ALTER TABLE `refreshtoken`
+  ADD PRIMARY KEY (`email`);
 
 --
 -- A tábla indexei `users`

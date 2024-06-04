@@ -1,5 +1,18 @@
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
+export async function Logout(body) {
+  try {
+    await fetch("http://localhost:" + import.meta.env.VITE_PORT + "/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
 export async function Register(path, body) {
   try {
     const response = await fetch(

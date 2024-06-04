@@ -20,6 +20,8 @@ export default function Home() {
     const data = await GetAllData("/getusers");
     if (data.success) {
       setData(data.users);
+    } else {
+      showAlert(data.message, "danger");
     }
   };
   const showAlert = (text, type) => {

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { Logout } from "../FetchData/fetchData";
 
 const AutchContext = createContext();
 
@@ -55,6 +56,7 @@ export const AuthProvider = ({ children }) => {
         email: "",
         admin: 0,
       });
+      Logout({email: loggedUser.email});
       navigate("/");
     }
   };

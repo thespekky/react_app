@@ -13,12 +13,19 @@ exports.login = async (req, res) => {
       }
     );
     if (user.length == 0) {
-      return res.send({ message: "Hibás jelszó vagy nincs ilyen felhasználó", success: false });
+      return res.send({
+        message: "Hibás jelszó vagy nincs ilyen felhasználó",
+        success: false,
+      });
     }
     const token = jwt.sign(
       { email: req.body.email },
       process.env.ACCESS_TOKEN_KEY,
       { expiresIn: "20m" }
+    );
+    const refreshToken = jwt.sign(
+      { email: req.body.email },
+      process.env.REFRESS_TOKEN_KEY
     );
     if (!token) {
       return res.send({
@@ -26,7 +33,59 @@ exports.login = async (req, res) => {
         success: false,
       });
     }
+    const t = await sequelize.transaction();
+    const reftoken = await sequelize.query(
+      "INSERT INTO refreshtoken (email, refreshtoken) VALUES (:Email, :Token)",
+      {
+        replacements: {
+          Email: email,
+          Token: refreshToken,
+        },
+        type: QueryTypes.INSERT,
+        transaction: t,
+      }
+    );
+    if (!reftoken) {
+      await t.rollback();
+      return res.send({
+        message: "Hiba a refreshtoken hozzáadása során",
+        success: false,
+      });
+    }
+    await t.commit();
+
     return res.send({ token: token, success: true, user: user });
+  } catch (e) {
+    console.log(e);
+    return res.send({ message: "Kritikus hiba", success: false });
+  }
+};
+exports.logout = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const t = await sequelize.transaction();
+
+    //a tpye DLETE miatt nem ad vissza értéket
+    const tokendelete = await sequelize.query(
+      "DELETE FROM refreshtoken WHERE email=:Email",
+      {
+        replacements: { Email: email },
+        type: QueryTypes.DELETE,
+        transaction: t,
+      }
+    );
+
+    /*console.log(tokendelete);
+    if (!tokendelete) {
+      await t.rollback();
+      return res.send({
+        message: "Hiba a refreshtoken törlése során",
+        success: false,
+      });
+    }*/
+
+    await t.commit();
+    return res.send({ message: "Sikeres kijelentkezés", success: true });
   } catch (e) {
     console.log(e);
     return res.send({ message: "Kritikus hiba", success: false });

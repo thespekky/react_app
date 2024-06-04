@@ -8,5 +8,6 @@ const adminController = require("../Controller/admin.Controller");
 routes.post("/login", authController.login);
 routes.post("/reg", authController.register);
 routes.get("/getusers", [authMiddleware.auth], adminController.getusers);
+routes.post("/logout", authController.logout);
 
 module.exports = routes;
