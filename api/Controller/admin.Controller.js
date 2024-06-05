@@ -15,7 +15,6 @@ exports.getusers = async (req, res) => {
       }
       return res.send({ users: users, success: true });
     }
-    console.log("first");
     return res.send({ message: "Nincs admin jogosultság", success: false });
   } catch (e) {
     console.log(e);

@@ -23,36 +23,49 @@ exports.login = async (req, res) => {
       process.env.ACCESS_TOKEN_KEY,
       { expiresIn: "20m" }
     );
-    const refreshToken = jwt.sign(
-      { email: req.body.email },
-      process.env.REFRESS_TOKEN_KEY
+    const reftokenvane = await sequelize.query(
+      "SELECT refreshtoken FROM refreshtoken WHERE email=:Email",
+      {
+        replacements: { Email: email },
+        type: QueryTypes.SELECT,
+      }
     );
+    let refreshToken;
+    if (reftokenvane.length != 0) {
+      refreshToken = reftokenvane;
+    } else {
+      refreshToken = jwt.sign(
+        { email: req.body.email },
+        process.env.REFRESS_TOKEN_KEY
+      );
+      const t = await sequelize.transaction();
+      const reftoken = await sequelize.query(
+        "INSERT INTO refreshtoken (email, refreshtoken) VALUES (:Email, :Token)",
+        {
+          replacements: {
+            Email: email,
+            Token: refreshToken,
+          },
+          type: QueryTypes.INSERT,
+          transaction: t,
+        }
+      );
+      if (!reftoken) {
+        await t.rollback();
+        return res.send({
+          message: "Hiba a refreshtoken hozzáadása során",
+          success: false,
+        });
+      }
+      await t.commit();
+    }
+
     if (!token) {
       return res.send({
         message: "Hiba a token generálása során",
         success: false,
       });
     }
-    const t = await sequelize.transaction();
-    const reftoken = await sequelize.query(
-      "INSERT INTO refreshtoken (email, refreshtoken) VALUES (:Email, :Token)",
-      {
-        replacements: {
-          Email: email,
-          Token: refreshToken,
-        },
-        type: QueryTypes.INSERT,
-        transaction: t,
-      }
-    );
-    if (!reftoken) {
-      await t.rollback();
-      return res.send({
-        message: "Hiba a refreshtoken hozzáadása során",
-        success: false,
-      });
-    }
-    await t.commit();
 
     return res.send({
       token: token,
@@ -71,14 +84,14 @@ exports.logout = async (req, res) => {
     const t = await sequelize.transaction();
 
     //a tpye DELETE miatt nem ad vissza értéket
-    const tokendelete = await sequelize.query(
+    /* const tokendelete = await sequelize.query(
       "DELETE FROM refreshtoken WHERE email=:Email",
       {
         replacements: { Email: email },
         type: QueryTypes.DELETE,
         transaction: t,
       }
-    );
+    );*/
 
     /*console.log(tokendelete);
     if (!tokendelete) {
@@ -101,14 +114,11 @@ exports.refreshtoken = async (req, res) => {
   let email;
   try {
     email = req.body.email;
-    //console.log(email);
     const { refreshtoken, authtoken } = req.body;
-    //console.log(req.body);
     if (!refreshtoken || !authtoken) {
       return res.send({ message: "Nincs token", success: false });
     }
     const tokenvalidálás = jwt.verify(authtoken, process.env.ACCESS_TOKEN_KEY);
-    //console.log(tokenvalidálás);
     if (tokenvalidálás) {
       return res.send({ token: authtoken, success: true, changed: false });
     }
