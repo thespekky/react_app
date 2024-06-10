@@ -18,7 +18,7 @@ export default function Home() {
   const [data, setData] = useState([]);
   const GetData = async () => {
     setTimeout(() => {}, 100);
-    const data = await GetAllData("/getusers");
+    const data = await GetAllData("/getallKosarasok");
     if (data.success) {
       setData(data.users);
     } else {
@@ -48,12 +48,13 @@ export default function Home() {
           showAlert("Belépve", "success");
         }}
       ></button>
-      {data.map((user) => (
-        <ul key={user.ID}>
-          <li>{user.name}</li>
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>{user.admin}</li>
+      {data.map((kosarasok) => (
+        <ul key={kosarasok.ID}>
+          <li>{kosarasok.name}</li>
+          <li>{kosarasok.bdate}</li>
+          <li>{kosarasok.team}</li>
+          <li>{kosarasok.image}</li>
+          <li>{kosarasok.introduction}</li>
         </ul>
       ))}
     </>
