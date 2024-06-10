@@ -5,6 +5,8 @@ import React, {
   useRef,
   useContext,
 } from "react";
+//import image from "./image.png";
+import image from "../../../../../images/image.png";
 import { useAuth } from "../../AuthContext/AuthContext";
 import Cookies from "universal-cookie";
 import { useNavigate, Link } from "react-router-dom";
@@ -48,15 +50,27 @@ export default function Home() {
           showAlert("Belépve", "success");
         }}
       ></button>
-      {data.map((kosarasok) => (
-        <ul key={kosarasok.ID}>
-          <li>{kosarasok.name}</li>
-          <li>{kosarasok.bdate}</li>
-          <li>{kosarasok.team}</li>
-          <li>{kosarasok.image}</li>
-          <li>{kosarasok.introduction}</li>
-        </ul>
-      ))}
+      <div className="flex flex-wrap flex-row w-full font-serif">
+        {data.map((kosarasok) => (
+          <div
+            className="grid grid-cols-2 w-1/5 min-w-48 border-2 rounded-md border-solid border-slate-500 p-0 m-1"
+            key={kosarasok.ID}
+          >
+            <div className=" max-w-48 max-h-48 relative">
+              <img
+                src={image}
+                className=" w-auto h-auto object-cover rounded-lg"
+              ></img>
+            </div>
+            <div className=" m-1">
+              <div className=" mt-1">{kosarasok.name}</div>
+              <div className=" mt-1">Született: {kosarasok.bdate}</div>
+              <div className=" mt-1">csapat: {kosarasok.team}</div>
+            </div>
+            <div className="col-span-2 mt-2">{kosarasok.introduction}</div>
+          </div>
+        ))}
+      </div>
     </>
   );
 }
