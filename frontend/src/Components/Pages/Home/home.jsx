@@ -50,10 +50,10 @@ export default function Home() {
           showAlert("Belépve", "success");
         }}
       ></button>
-      <div className="flex flex-wrap flex-row w-full font-serif">
+      <div className="flex flex-wrap md:justify-center flex-row w-full font-serif">
         {data.map((kosarasok) => (
           <div
-            className="grid grid-cols-2 w-1/5 min-w-48 border-2 rounded-md border-solid border-slate-500 p-0 m-1"
+            className="grid grid-cols-2 w-1/5 min-w-48 md:min-w-full md:grid-cols-4 border-2 rounded-md border-solid border-slate-500 p-0 m-1"
             key={kosarasok.ID}
           >
             <div className=" max-w-48 max-h-48 relative">
@@ -67,7 +67,9 @@ export default function Home() {
               <div className=" mt-1">Született: {kosarasok.bdate}</div>
               <div className=" mt-1">csapat: {kosarasok.team}</div>
             </div>
-            <div className="col-span-2 mt-2">{kosarasok.introduction}</div>
+            <div className="col-span-2 md:row-span-1 mt-2">
+              {kosarasok.introduction}
+            </div>
           </div>
         ))}
       </div>
