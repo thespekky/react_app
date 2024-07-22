@@ -1,15 +1,18 @@
-/* eslint-disable react/prop-types */
 export default function CostumeSearch({ onsubmit = () => {} }) {
   return (
     <>
-      <form onSubmit={senddata} className="flex justify-center">
+      <form onSubmit={senddata} className="flex justify-center pt-2 pb-2">
         <input
           type="text"
-          className="w-[80%] flex content-center border-2 border-slate-500 rounded-md p-1"
+          placeholder="Keresés"
+          className="w-[80%] flex content-center border-2 border-slate-500 rounded-2xl p-1"
           name="userfilter"
           id=""
         />
-        <button type="submit" className="pl-1">
+        <button
+          type="submit"
+          className="ml-2 p-2 font-semibold tracking-wider border-2 bg-green-700 rounded-full hover:bg-green-600 text-white"
+        >
           Search
         </button>
       </form>
