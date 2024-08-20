@@ -2,13 +2,14 @@ const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const sequelize = require("../Models/dbModell");
 const { QueryTypes } = require("sequelize");
+const bcrypt = require("bcrypt");
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await sequelize.query(
-      "SELECT ID, username, name, email,admin FROM users WHERE email=:Email AND password=:Password",
+      "SELECT ID, username, name, email,admin,password FROM users WHERE email=:Email",
       {
-        replacements: { Email: email, Password: password },
+        replacements: { Email: email },
         type: QueryTypes.SELECT,
       }
     );
@@ -18,6 +19,13 @@ exports.login = async (req, res) => {
         success: false,
       });
     }
+    if (!(await bcrypt.compare(password, user[0].password))) {
+      return res.send({
+        message: "Hibás jelszó ",
+        success: false,
+      });
+    }
+
     const token = jwt.sign(
       { email: req.body.email },
       process.env.ACCESS_TOKEN_KEY,
@@ -82,26 +90,6 @@ exports.logout = async (req, res) => {
   try {
     const { email } = req.body;
     const t = await sequelize.transaction();
-
-    //a tpye DELETE miatt nem ad vissza értéket
-    /* const tokendelete = await sequelize.query(
-      "DELETE FROM refreshtoken WHERE email=:Email",
-      {
-        replacements: { Email: email },
-        type: QueryTypes.DELETE,
-        transaction: t,
-      }
-    );*/
-
-    /*console.log(tokendelete);
-    if (!tokendelete) {
-      await t.rollback();
-      return res.send({
-        message: "Hiba a refreshtoken törlése során",
-        success: false,
-      });
-    }*/
-
     await t.commit();
     return res.send({ message: "Sikeres kijelentkezés", success: true });
   } catch (e) {
@@ -174,6 +162,7 @@ exports.register = async (req, res) => {
   const t = await sequelize.transaction();
   try {
     const { username, name, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
     const vane_user = await sequelize.query(
       "SELECT email FROM users WHERE email=:Email",
       {
@@ -192,7 +181,7 @@ exports.register = async (req, res) => {
           Username: username,
           Name: name,
           Email: email,
-          Password: password,
+          Password: hashedPassword,
         },
         type: QueryTypes.INSERT,
         transaction: t,

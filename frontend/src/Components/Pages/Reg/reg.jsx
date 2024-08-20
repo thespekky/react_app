@@ -1,14 +1,12 @@
-import { React, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 
 import Cookies from "universal-cookie";
-import { useAuth } from "../../AuthContext/AuthContext";
 import { Alert } from "../../Alert/Alert";
 import AlertContext from "../../Alert/alert.context";
 import { useNavigate } from "react-router-dom";
 import { Register } from "../../FetchData/fetchData";
 const cookies = new Cookies();
 export default function Reg() {
-  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const [, sertAlert] = useContext(AlertContext);
   const showAlert = (text, type) => {
@@ -49,7 +47,7 @@ export default function Reg() {
     }
     const body = {
       email: formData.get("email"),
-      password: CryptoJS.SHA1(formData.get("password")).toString(),
+      password: formData.get("password"),
       name: (
         formData.get("Keresztnev") +
         " " +

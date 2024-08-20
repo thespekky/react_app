@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import AlertContext from "./alert.context";
 const alertStyles = {
   padding: "16px",

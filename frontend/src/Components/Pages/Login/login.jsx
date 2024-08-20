@@ -1,4 +1,4 @@
-import { React, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 
 import Cookies from "universal-cookie";
 import { useAuth } from "../../AuthContext/AuthContext";
@@ -9,7 +9,6 @@ import { LoginUser } from "../../FetchData/fetchData";
 const cookies = new Cookies();
 export default function Login() {
   const { login } = useAuth();
-  const { loggedUser, setUser } = useAuth();
   const navigate = useNavigate();
   const [, sertAlert] = useContext(AlertContext);
   const showAlert = (text, type) => {
@@ -32,7 +31,7 @@ export default function Login() {
     }
     const body = {
       email: formData.get("email"),
-      password: CryptoJS.SHA1(formData.get("password")).toString(),
+      password: formData.get("password"),
     };
 
     const data = await LoginUser("/login", body);

@@ -39,7 +39,7 @@ export default function Kosarasok({ searchbar = null }) {
         .filter((kosaras) => kosaras.name.includes(searchbar))
         .map((kosarasok) => (
           <div
-            className="shadow-md shadow-slate-600 grid grid-cols-2 w-[380px] md:w-full md:pr-4 md:grid-cols-4 border-2 rounded-md border-solid border-slate-500 p-0 m-1 mr-3"
+            className="hover:w-[400px] shadow-md shadow-slate-600 grid grid-cols-2 w-[380px] md:w-full md:pr-4 md:grid-cols-4 border-2 rounded-md  p-0 m-1 mr-3"
             key={kosarasok.ID}
           >
             <div className=" max-w-48 max-h-48 relative">
