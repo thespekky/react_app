@@ -14,13 +14,13 @@ exports.login = async (req, res) => {
       }
     );
     if (user.length == 0) {
-      return res.send({
-        message: "Hibás jelszó vagy nincs ilyen felhasználó",
+      return res.status(404).send({
+        message: "Nincs ilyen felhasználó",
         success: false,
       });
     }
     if (!(await bcrypt.compare(password, user[0].password))) {
-      return res.send({
+      return res.status(404).send({
         message: "Hibás jelszó ",
         success: false,
       });
@@ -60,7 +60,7 @@ exports.login = async (req, res) => {
       );
       if (!reftoken) {
         await t.rollback();
-        return res.send({
+        return res.status(500).send({
           message: "Hiba a refreshtoken hozzáadása során",
           success: false,
         });
@@ -69,13 +69,13 @@ exports.login = async (req, res) => {
     }
 
     if (!token) {
-      return res.send({
+      return res.status(400).send({
         message: "Hiba a token generálása során",
         success: false,
       });
     }
 
-    return res.send({
+    return res.status(200).send({
       token: token,
       refreshtoken: refreshToken,
       success: true,
@@ -83,7 +83,7 @@ exports.login = async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    return res.send({ message: "Kritikus hiba", success: false });
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
   }
 };
 exports.logout = async (req, res) => {
@@ -91,10 +91,12 @@ exports.logout = async (req, res) => {
     const { email } = req.body;
     const t = await sequelize.transaction();
     await t.commit();
-    return res.send({ message: "Sikeres kijelentkezés", success: true });
+    return res
+      .status(200)
+      .send({ message: "Sikeres kijelentkezés", success: true });
   } catch (e) {
     console.log(e);
-    return res.send({ message: "Kritikus hiba", success: false });
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
   }
 };
 exports.refreshtoken = async (req, res) => {
@@ -104,15 +106,19 @@ exports.refreshtoken = async (req, res) => {
     email = req.body.email;
     const { refreshtoken, authtoken } = req.body;
     if (!refreshtoken || !authtoken) {
-      return res.send({ message: "Nincs token", success: false });
+      return res.status(404).send({ message: "Nincs token", success: false });
     }
     const tokenvalidálás = jwt.verify(authtoken, process.env.ACCESS_TOKEN_KEY);
     if (tokenvalidálás) {
-      return res.send({ token: authtoken, success: true, changed: false });
+      return res
+        .status(200)
+        .send({ token: authtoken, success: true, changed: false });
     }
     const data = jwt.verify(refreshtoken, process.env.REFRESS_TOKEN_KEY);
     if (!data) {
-      return res.send({ message: "Hibási refreshtoken", success: false });
+      return res
+        .status(404)
+        .send({ message: "Hibási refreshtoken", success: false });
     }
     const reftoken = await sequelize.query(
       "SELECT email,refreshtoken FROM refreshtoken WHERE refreshtoken=:Token",
@@ -122,7 +128,7 @@ exports.refreshtoken = async (req, res) => {
       }
     );
     if (!reftoken) {
-      return res.send({
+      return res.status(404).send({
         message: "Nincs ilyen refreshtoken az adatbázisban",
         success: false,
       });
@@ -131,26 +137,25 @@ exports.refreshtoken = async (req, res) => {
       expiresIn: "20m",
     });
     if (!token) {
-      return res.send({
+      return res.status(500).send({
         message: "Hiba a token generálása során",
         success: false,
       });
     }
 
-    return res.send({ token: token, success: true });
+    return res.status(200).send({ token: token, success: true });
   } catch (e) {
     console.log(e);
     token = jwt.sign({ email: email }, process.env.ACCESS_TOKEN_KEY, {
       expiresIn: "20m",
     });
     if (!token) {
-      return res.send({
+      return res.status(500).send({
         message: "Hiba a token generálása során",
         success: false,
       });
     }
-    //console.log("az új token: " + token);
-    return res.send({
+    return res.status(200).send({
       message: "az új token:",
       token: token,
       success: true,
@@ -172,7 +177,9 @@ exports.register = async (req, res) => {
     );
     if (vane_user.length != 0) {
       await t.rollback();
-      return res.send({ message: "Van ilyen felhasználó", success: false });
+      return res
+        .status(400)
+        .send({ message: "Van ilyen felhasználó", success: false });
     }
     const user = await sequelize.query(
       "INSERT INTO users (username, name, email, password,admin) VALUES (:Username, :Name, :Email, :Password,0)",
@@ -189,16 +196,18 @@ exports.register = async (req, res) => {
     );
     if (!user) {
       await t.rollback();
-      return res.send({
+      return res.status(500).send({
         message: "Hiba a felhasználó hozzáadása során",
         success: false,
       });
     }
     await t.commit();
-    return res.send({ message: "Sikeres regisztráció", success: true });
+    return res
+      .status(201)
+      .send({ message: "Sikeres regisztráció", success: true });
   } catch (e) {
     await t.rollback();
     console.log(e);
-    return res.send({ message: "Kritikus hiba", success: false });
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
   }
 };

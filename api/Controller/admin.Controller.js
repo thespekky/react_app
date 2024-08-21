@@ -11,13 +11,17 @@ exports.getusers = async (req, res) => {
         }
       );
       if (users.length == 0) {
-        return res.send({ message: "Hibás select", success: false });
+        return res
+          .status(200)
+          .send({ message: "Hibás select", success: false });
       }
-      return res.send({ users: users, success: true });
+      return res.status(200).send({ users: users, success: true });
     }
-    return res.send({ message: "Nincs admin jogosultság", success: false });
+    return res
+      .status(403)
+      .send({ message: "Nincs admin jogosultság", success: false });
   } catch (e) {
     console.log(e);
-    return res.send({ message: "Kritikus hiba", success: false });
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
   }
 };
