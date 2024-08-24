@@ -7,7 +7,7 @@ import Cookies from "universal-cookie";
 
 import { Alert } from "../../Alert/Alert";
 import AlertContext from "../../Alert/alert.context";
-import Kosarasok from "./Kosarasok/Kosarasok";
+import Kosarasok from "./Kosarasok/kosarasok";
 import CostumeSearch from "../../CostumeSearch/CostumeSearch";
 const cookies = new Cookies();
 export default function Home() {

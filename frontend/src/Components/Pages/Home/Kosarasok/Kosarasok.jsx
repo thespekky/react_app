@@ -5,12 +5,14 @@ import AlertContext from "../../../Alert/alert.context";
 import { Alert } from "../../../Alert/Alert";
 import image from "../image.png";
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 const cookies = new Cookies();
 Kosarasok.propTypes = {
   searchbar: PropTypes.any, // Change 'any' to the expected prop type if known
 };
 export default function Kosarasok({ searchbar = null }) {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
   const [, sertAlert] = useContext(AlertContext);
   const showAlert = (text, type) => {
     sertAlert({
@@ -41,6 +43,9 @@ export default function Kosarasok({ searchbar = null }) {
           <div
             className="hover:w-[400px] shadow-md shadow-slate-600 grid grid-cols-2 w-[380px] md:w-full md:pr-4 md:grid-cols-4 border-2 rounded-md  p-0 m-1 mr-3"
             key={kosarasok.ID}
+            onClick={() => {
+              navigate("/kosarasok/" + kosarasok.ID);
+            }}
           >
             <div className=" max-w-48 max-h-48 relative">
               <img
