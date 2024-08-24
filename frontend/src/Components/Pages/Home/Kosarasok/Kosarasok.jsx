@@ -33,7 +33,7 @@ export default function Kosarasok({ searchbar = null }) {
     if (cookies.get("userData")) {
       GetData();
     }
-  });
+  }, []);
   return (
     <>
       <Alert />

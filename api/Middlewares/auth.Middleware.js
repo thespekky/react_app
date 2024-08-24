@@ -31,7 +31,7 @@ exports.auth = async (req, res, next) => {
     next();
   } catch (e) {
     console.log(e);
-    return res.status(500).send({
+    return res.status(200).send({
       message: "Lejárt a token töltse újra az oldalt",
       success: false,
     });
