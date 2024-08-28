@@ -35,7 +35,33 @@ export default function Kosaras() {
   return (
     <>
       <Alert />
-      <Suspense fallback={<div>Adatok töltése</div>}></Suspense>
+      <Suspense fallback={<div>Adatok töltése</div>}>
+        <div className="p-3">
+          <h2 className="text-center font-black italic">{Kosaras.name}</h2>
+          <div className="flex md:flex-row md:flex-wrap">
+            <div className=" w-[80%] md:w-[100%] flex justify-center">
+              {" "}
+              <img
+                className=" w-auto h-auto object-cover rounded-[12px] pl-1 pt-1 md:p-[5px]"
+                src={"/src/Components/Pages/Home/" + Kosaras.image}
+                alt="kosaras képe"
+              />
+            </div>
+            <div className="w-[20%] md:w-[100%] bg-gray-200 p-1 m-1 rounded-md">
+              <div className=" mt-1 font-serif tracking-wide">
+                Születése dátum: {Kosaras.bdate}
+              </div>
+              <div className=" mt-1 tracking-wide">csapat: {Kosaras.team}</div>
+            </div>
+          </div>
+          <div className="p-1 m-3 rounded-lg bg-gray-50">
+            {Kosaras.introduction}
+          </div>
+          <div className="p-1 m-3 rounded-lg text-center bg-gray-50">
+            Eredmények
+          </div>
+        </div>
+      </Suspense>
     </>
   );
 }
