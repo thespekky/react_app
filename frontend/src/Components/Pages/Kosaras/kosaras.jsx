@@ -37,9 +37,9 @@ export default function Kosaras() {
       <Alert />
       <Suspense fallback={<div>Adatok töltése</div>}>
         <div className="p-3">
-          <h2 className="text-center font-black italic">{Kosaras.name}</h2>
+          <h2 className="text-center font-black italic p-3">{Kosaras.name}</h2>
           <div className="flex md:flex-row md:flex-wrap">
-            <div className=" w-[80%] md:w-[100%] flex justify-center">
+            <div className=" w-[80%] md:w-[100%] flex justify-start">
               {" "}
               <img
                 className=" w-auto h-auto object-cover rounded-[12px] pl-1 pt-1 md:p-[5px]"
@@ -49,9 +49,13 @@ export default function Kosaras() {
             </div>
             <div className="w-[20%] md:w-[100%] bg-gray-200 p-1 m-1 rounded-md">
               <div className=" mt-1 font-serif tracking-wide">
-                Születése dátum: {Kosaras.bdate}
+                <p className="font-bold text-center">Születése dátum</p>
+                <p className="text-center">{Kosaras.bdate}</p>
               </div>
-              <div className=" mt-1 tracking-wide">csapat: {Kosaras.team}</div>
+              <div className=" mt-1 tracking-wide">
+                <p className="font-bold text-center">csapat</p>
+                <p className="text-center">{Kosaras.team}</p>
+              </div>
             </div>
           </div>
           <div className="p-1 m-3 rounded-lg bg-gray-50">
