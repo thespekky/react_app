@@ -13,6 +13,7 @@ routes.get("/getusers", [authMiddleware.auth], adminController.getusers);
 routes.post("/logout", authController.logout);
 routes.post("/refreshtoken", authController.refreshtoken);
 
+//kosarasok
 routes.get(
   "/getallKosarasok",
   [authMiddleware.auth],
@@ -22,6 +23,11 @@ routes.get(
   "/kosarasok/:id",
   [authMiddleware.auth],
   userController.getOneKosaras
+);
+routes.get(
+  "/kosarasok/eredmenyek/:id",
+  [authMiddleware.auth],
+  userController.getKosarasEredmenyek
 );
 
 module.exports = routes;

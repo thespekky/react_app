@@ -4,10 +4,12 @@ import Cookies from "universal-cookie";
 import { GetOneData } from "../../FetchData/fetchData";
 import AlertContext from "../../Alert/alert.context";
 import { Alert } from "../../Alert/Alert";
+import Eredmenyek_component from "./Eredmenyek";
 const cookie = new Cookies();
 
 export default function Kosaras() {
   const [Kosaras, setKosaras] = useState([]);
+  const [Eredmenyek, setEredmenyek] = useState([]);
   const id = useParams().id;
   const navigate = useNavigate();
   const [, setAlert] = useContext(AlertContext);
@@ -25,11 +27,20 @@ export default function Kosaras() {
       showAlert(data.message, "danger");
     }
   };
+  const getKosarasEredmenyek = async () => {
+    const data = await GetOneData("/kosarasok/eredmenyek/" + id);
+    if (data.eredmenyek) {
+      setEredmenyek(data.eredmenyek);
+    } else {
+      showAlert(data.message, "danger");
+    }
+  };
   useEffect(() => {
     if (!cookie.get("userData")) {
       navigate("/");
     } else {
       GetData();
+      getKosarasEredmenyek();
     }
   }, []);
   return (
@@ -62,7 +73,7 @@ export default function Kosaras() {
             {Kosaras.introduction}
           </div>
           <div className="p-1 m-3 rounded-lg text-center bg-gray-50">
-            Eredmények
+            <Eredmenyek_component child={Eredmenyek} />
           </div>
         </div>
       </Suspense>

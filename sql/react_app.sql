@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Aug 31. 21:48
+-- Létrehozás ideje: 2024. Aug 31. 21:54
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 8.0.1
 
@@ -54,7 +54,7 @@ INSERT INTO `kosarasok` (`ID`, `name`, `bdate`, `team`, `image`, `introduction`)
 
 CREATE TABLE `kosarasok_eredmenyek` (
   `ID` int(11) NOT NULL,
-  `kosarasok_id` int(11) NOT NULL,
+  `kosaras_id` int(11) NOT NULL,
   `helyszin` text COLLATE utf8_hungarian_ci NOT NULL,
   `csarnok` text COLLATE utf8_hungarian_ci NOT NULL,
   `pontok` int(11) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `kosarasok_eredmenyek` (
 -- A tábla adatainak kiíratása `kosarasok_eredmenyek`
 --
 
-INSERT INTO `kosarasok_eredmenyek` (`ID`, `kosarasok_id`, `helyszin`, `csarnok`, `pontok`, `buntetesek`) VALUES
+INSERT INTO `kosarasok_eredmenyek` (`ID`, `kosaras_id`, `helyszin`, `csarnok`, `pontok`, `buntetesek`) VALUES
 (1, 1, 'Baja', 'Aréna', 12, 'sárgalap');
 
 -- --------------------------------------------------------
@@ -130,7 +130,7 @@ ALTER TABLE `kosarasok`
 --
 ALTER TABLE `kosarasok_eredmenyek`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `kosarasok_id` (`kosarasok_id`);
+  ADD KEY `kosaras_id` (`kosaras_id`);
 
 --
 -- A tábla indexei `refreshtoken`
@@ -174,7 +174,7 @@ ALTER TABLE `users`
 -- Megkötések a táblához `kosarasok_eredmenyek`
 --
 ALTER TABLE `kosarasok_eredmenyek`
-  ADD CONSTRAINT `kosarasok_eredmenyek_ibfk_1` FOREIGN KEY (`kosarasok_id`) REFERENCES `users` (`ID`);
+  ADD CONSTRAINT `kosarasok_eredmenyek_ibfk_1` FOREIGN KEY (`kosaras_id`) REFERENCES `users` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
