@@ -58,7 +58,8 @@ exports.getKosarasEredmenyek = async (req, res) => {
       );
       if (eredmenyek.length == 0) {
         return res.status(404).send({
-          message: "Nincs ilyen kosarasnak eredményei",
+          message: "Nincs ennek a kosarasnak eredményei",
+          eredmenyek: eredmenyek,
           success: false,
         });
       }

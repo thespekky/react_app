@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Aug 31. 21:54
+-- Létrehozás ideje: 2024. Sze 02. 21:16
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 8.0.1
 
@@ -49,6 +49,20 @@ INSERT INTO `kosarasok` (`ID`, `name`, `bdate`, `team`, `image`, `introduction`)
 -- --------------------------------------------------------
 
 --
+-- Tábla szerkezet ehhez a táblához `kosarasok_csalad`
+--
+
+CREATE TABLE `kosarasok_csalad` (
+  `ID` int(11) NOT NULL,
+  `Vezetek_nev` text COLLATE utf8_hungarian_ci NOT NULL,
+  `Kereszt_nev` text COLLATE utf8_hungarian_ci NOT NULL,
+  `Kapcsolat` text COLLATE utf8_hungarian_ci NOT NULL,
+  `Kosaras` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tábla szerkezet ehhez a táblához `kosarasok_eredmenyek`
 --
 
@@ -66,7 +80,8 @@ CREATE TABLE `kosarasok_eredmenyek` (
 --
 
 INSERT INTO `kosarasok_eredmenyek` (`ID`, `kosaras_id`, `helyszin`, `csarnok`, `pontok`, `buntetesek`) VALUES
-(1, 1, 'Baja', 'Aréna', 12, 'sárgalap');
+(1, 1, 'Baja', 'Aréna', 12, 'sárgalap'),
+(2, 1, 'Baja1', 'Aréna1', 121, 'sárgalap1');
 
 -- --------------------------------------------------------
 
@@ -126,6 +141,13 @@ ALTER TABLE `kosarasok`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- A tábla indexei `kosarasok_csalad`
+--
+ALTER TABLE `kosarasok_csalad`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `Kosaras` (`Kosaras`);
+
+--
 -- A tábla indexei `kosarasok_eredmenyek`
 --
 ALTER TABLE `kosarasok_eredmenyek`
@@ -155,10 +177,16 @@ ALTER TABLE `kosarasok`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT a táblához `kosarasok_csalad`
+--
+ALTER TABLE `kosarasok_csalad`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT a táblához `kosarasok_eredmenyek`
 --
 ALTER TABLE `kosarasok_eredmenyek`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT a táblához `users`
@@ -169,6 +197,12 @@ ALTER TABLE `users`
 --
 -- Megkötések a kiírt táblákhoz
 --
+
+--
+-- Megkötések a táblához `kosarasok_csalad`
+--
+ALTER TABLE `kosarasok_csalad`
+  ADD CONSTRAINT `kosarasok_csalad_ibfk_1` FOREIGN KEY (`Kosaras`) REFERENCES `kosarasok` (`ID`);
 
 --
 -- Megkötések a táblához `kosarasok_eredmenyek`

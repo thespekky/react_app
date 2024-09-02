@@ -1,5 +1,14 @@
-export default function Eredmenyek({ child }) {
-  console.log(child);
+import { useEffect } from "react";
+import { useAuth } from "../../AuthContext/AuthContext";
+import { useNavigate } from "react-router-dom";
+export default function Eredmenyek({ Eredmenyek }) {
+  const { isLoggedIn } = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div>
       <h2 className="p-5">eredmények</h2>
@@ -22,7 +31,7 @@ export default function Eredmenyek({ child }) {
             </tr>
           </thead>
           <tbody>
-            {child.map((eredmeny) => (
+            {Eredmenyek.map((eredmeny) => (
               <tr key={eredmeny.ID}>
                 <td className="px-6 py-4">{eredmeny.helyszin}</td>
                 <td className="px-6 py-4">{eredmeny.csarnok}</td>

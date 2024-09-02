@@ -73,7 +73,7 @@ export default function Kosaras() {
             {Kosaras.introduction}
           </div>
           <div className="p-1 m-3 rounded-lg text-center bg-gray-50">
-            <Eredmenyek_component child={Eredmenyek} />
+            <Eredmenyek_component Eredmenyek={Eredmenyek} />
           </div>
         </div>
       </Suspense>
