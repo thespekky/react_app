@@ -70,3 +70,27 @@ exports.getKosarasEredmenyek = async (req, res) => {
     return res.status(500).send({ message: "Kritikus hiba", success: false });
   }
 };
+exports.getKosarasCsaladtagok = async (req, res) => {
+  try {
+    if (req.user[0] != null) {
+      const csaladtagok = await sequelize.query(
+        "SELECT * FROM kosarasok_csalad WHERE Kosaras=:ID",
+        {
+          replacements: { ID: req.params.id },
+          type: QueryTypes.SELECT,
+        }
+      );
+      if (csaladtagok.length == 0) {
+        return res.status(404).send({
+          message: "Nincs ennek a kosarasnak csaladtagjai",
+          csaladtagok: csaladtagok,
+          success: false,
+        });
+      }
+      return res.status(200).send({ csaladtagok: csaladtagok, success: true });
+    }
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
+  }
+};

@@ -29,5 +29,10 @@ routes.get(
   [authMiddleware.auth],
   userController.getKosarasEredmenyek
 );
+routes.get(
+  "/kosarasok/csaladtagok/:id",
+  [authMiddleware.auth],
+  userController.getKosarasCsaladtagok
+);
 
 module.exports = routes;

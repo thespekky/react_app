@@ -1,15 +1,17 @@
 import { useEffect, useState, useContext, Suspense } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
-import { GetOneData } from "../../FetchData/fetchData";
+import { GetOneData, GetAllData } from "../../FetchData/fetchData";
 import AlertContext from "../../Alert/alert.context";
 import { Alert } from "../../Alert/Alert";
 import Eredmenyek_component from "./Eredmenyek";
+import Csaladtagok_component from "./Csaladtagok";
 const cookie = new Cookies();
 
 export default function Kosaras() {
   const [Kosaras, setKosaras] = useState([]);
   const [Eredmenyek, setEredmenyek] = useState([]);
+  const [Csaladtagok, setCsaladtagok] = useState([]);
   const id = useParams().id;
   const navigate = useNavigate();
   const [, setAlert] = useContext(AlertContext);
@@ -35,12 +37,21 @@ export default function Kosaras() {
       showAlert(data.message, "danger");
     }
   };
+  const GetCsapadtagok = async () => {
+    const data = await GetAllData("/kosarasok/csaladtagok/" + id);
+    if (data.csaladtagok) {
+      setCsaladtagok(data.csaladtagok);
+    } else {
+      showAlert(data.message, "danger");
+    }
+  };
   useEffect(() => {
     if (!cookie.get("userData")) {
       navigate("/");
     } else {
       GetData();
       getKosarasEredmenyek();
+      GetCsapadtagok();
     }
   }, []);
   return (
@@ -72,8 +83,9 @@ export default function Kosaras() {
           <div className="p-1 m-3 rounded-lg bg-gray-50">
             {Kosaras.introduction}
           </div>
-          <div className="p-1 m-3 rounded-lg text-center bg-gray-50">
+          <div className="p-1 m-3 rounded-lg bg-gray-50 kosaras_adatok">
             <Eredmenyek_component Eredmenyek={Eredmenyek} />
+            <Csaladtagok_component Csaladtagok={Csaladtagok} />
           </div>
         </div>
       </Suspense>

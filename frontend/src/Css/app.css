@@ -53,3 +53,17 @@
   border-radius: 25px;
   height: 25px;
 }
+.kosaras_adatok {
+  display: flex;
+}
+@media (max-width: 1000px) {
+  .max-width-half {
+    width: 100%;
+  }
+  .max-width-half table {
+    width: 100%;
+  }
+  .kosaras_adatok {
+    display: block;
+  }
+}
