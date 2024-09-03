@@ -6,6 +6,15 @@
   --hover_color: rgb(192, 243, 239);
   --hover_color2: rgb(14, 164, 233);
 }
+.light {
+  --text-color: 245, 245, 245;
+  --background-color: 81, 67, 76;
+}
+.dark {
+  --text-color: 255, 255, 255;
+  --background-color: 0, 0, 0;
+}
+
 .navbar {
   padding: 0 1rem;
   gap: 0px;

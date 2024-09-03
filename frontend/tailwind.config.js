@@ -2,7 +2,12 @@
 export default {
   content: ["./src/**/*.{html,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        coloroftext: "rgba(var(--text-color))",
+        backgroundcolor: "rgba(var(--background-color))",
+      },
+    },
     screens: {
       md: { max: "768px" },
       // => @media (max-width: 767px) { ... }

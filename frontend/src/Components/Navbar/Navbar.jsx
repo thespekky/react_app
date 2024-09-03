@@ -31,33 +31,42 @@ export default function Navbar() {
     let selectedTheme = localStorage.getItem("DarkTheme");
     if (selectedTheme) {
       if (selectedTheme === "true") {
+        document.body.classList.add("light");
+        document.body.classList.remove("dark");
         setDarkTheme(true);
       } else {
+        document.body.classList.add("dark");
+        document.body.classList.remove("light");
         setDarkTheme(false);
       }
     } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setDarkTheme(true);
+      document.body.classList.add("dark");
+      document.body.classList.remove("light");
     } else {
       setDarkTheme(false);
+      document.body.classList.add("light");
+      document.body.classList.remove("dark");
     }
     TokenValidálás();
   }, []);
   function ThemeChange() {
-    console.log(darktheme);
     if (darktheme == true) {
       setDarkTheme(false);
       localStorage.setItem("DarkTheme", false);
-      console.log(localStorage.getItem("DarkTheme"));
+      document.body.classList.add("dark");
+      document.body.classList.remove("light");
     } else {
       setDarkTheme(true);
       localStorage.setItem("DarkTheme", true);
-      console.log(localStorage.getItem("DarkTheme"));
+      document.body.classList.add("light");
+      document.body.classList.remove("dark");
     }
   }
 
   return (
     <>
-      <nav className="navbar bg-stone-800 text-white grid items-center ">
+      <nav className="navbar bg-backgroundcolor text-coloroftext grid items-center ">
         <div className="">
           <Link to={"/"} className="text-5x1 title flex justify-start ">
             Fő oldal
