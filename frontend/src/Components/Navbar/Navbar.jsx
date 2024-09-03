@@ -28,13 +28,30 @@ export default function Navbar() {
     }
   };
   useEffect(() => {
+    let selectedTheme = localStorage.getItem("DarkTheme");
+    if (selectedTheme) {
+      if (selectedTheme === "true") {
+        setDarkTheme(true);
+      } else {
+        setDarkTheme(false);
+      }
+    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setDarkTheme(true);
+    } else {
+      setDarkTheme(false);
+    }
     TokenValidálás();
   }, []);
   function ThemeChange() {
-    if (darktheme) {
+    console.log(darktheme);
+    if (darktheme == true) {
       setDarkTheme(false);
+      localStorage.setItem("DarkTheme", false);
+      console.log(localStorage.getItem("DarkTheme"));
     } else {
       setDarkTheme(true);
+      localStorage.setItem("DarkTheme", true);
+      console.log(localStorage.getItem("DarkTheme"));
     }
   }
 
@@ -48,7 +65,7 @@ export default function Navbar() {
         </div>
         <div className="">
           <ul className="p-0 m-0 list-none flex justify-center max-lg:gap-0 gap-3.5">
-            {iisLoggedIn ? (
+            {isLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
               <></>
@@ -57,7 +74,7 @@ export default function Navbar() {
         </div>
         <div className="">
           <ul className="p-0 m-0 list-none row-span-3 col-span-1 flex justify-center max-lg:gap-0 gap-3.5">
-            {iisLoggedIn ? (
+            {isLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
               <></>
@@ -66,7 +83,7 @@ export default function Navbar() {
         </div>
         <div className=" ">
           <ul className="p-0 m-0 list-none max-lg:gap-0 flex justify-center gap-3.5">
-            {iisLoggedIn ? (
+            {isLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
               <></>
