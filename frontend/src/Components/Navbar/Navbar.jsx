@@ -1,11 +1,14 @@
 import { Link, useResolvedPath, useMatch } from "react-router-dom";
 import { useAuth } from "../AuthContext/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Refreshtoken } from "../FetchData/fetchData";
 import Cookies from "universal-cookie";
+import { MdDarkMode } from "react-icons/md";
+import { CiDark } from "react-icons/ci";
 const cookies = new Cookies();
 export default function Navbar() {
   const { isLoggedIn, logout } = useAuth();
+  const [darktheme, setDarkTheme] = useState(false);
   let iisLoggedIn = true;
   const TokenValidálás = async () => {
     if (cookies.get("userData") != null) {
@@ -27,6 +30,13 @@ export default function Navbar() {
   useEffect(() => {
     TokenValidálás();
   }, []);
+  function ThemeChange() {
+    if (darktheme) {
+      setDarkTheme(false);
+    } else {
+      setDarkTheme(true);
+    }
+  }
 
   return (
     <>
@@ -63,6 +73,13 @@ export default function Navbar() {
             )}
           </ul>
         </div>
+        <ul className="p-0 m-0 list-none max-lg:col-start-9 flex justify-end col-start-9">
+          {darktheme ? (
+            <MdDarkMode onClick={() => ThemeChange()} />
+          ) : (
+            <CiDark onClick={() => ThemeChange()} />
+          )}
+        </ul>
         <ul className="p-0 m-0 list-none max-lg:col-start-9 flex justify-end col-start-10">
           {!isLoggedIn ? (
             <CostumeLink to={"/login"}>Belépés</CostumeLink>
