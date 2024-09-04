@@ -5,11 +5,12 @@ import { Refreshtoken } from "../FetchData/fetchData";
 import Cookies from "universal-cookie";
 import { MdDarkMode } from "react-icons/md";
 import { CiDark } from "react-icons/ci";
+import { IconContext } from "react-icons";
+
 const cookies = new Cookies();
 export default function Navbar() {
   const { isLoggedIn, logout } = useAuth();
   const [darktheme, setDarkTheme] = useState(false);
-  let iisLoggedIn = true;
   const TokenValidálás = async () => {
     if (cookies.get("userData") != null) {
       let body = {
@@ -66,9 +67,12 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="navbar grid items-center bg-backgroundcolor text-coloroftext">
+      <nav className="navbar grid grid-cols-12 items-center bg-backgroundcolor pb-5 pt-5 text-coloroftext">
         <div className="">
-          <Link to={"/"} className="text-5x1 title flex justify-start">
+          <Link
+            to={"/"}
+            className="text-5x1 title flex justify-start font-bold"
+          >
             Fő oldal
           </Link>
         </div>
@@ -99,14 +103,26 @@ export default function Navbar() {
             )}
           </ul>
         </div>
-        <ul className="max-lg:col-start-9 col-start-9 m-0 flex list-none justify-end p-0">
-          {darktheme ? (
-            <MdDarkMode onClick={() => ThemeChange()} />
-          ) : (
-            <CiDark onClick={() => ThemeChange()} />
-          )}
+        <ul className="max-lg:col-start-9 col-start-11 m-0 flex list-none justify-end p-0">
+          <li className="flex">
+            {darktheme ? (
+              <>
+                <p className="mr-2">Sötét</p>
+                <IconContext.Provider value={{ size: "25px" }}>
+                  <MdDarkMode onClick={() => ThemeChange()} />
+                </IconContext.Provider>
+              </>
+            ) : (
+              <>
+                <p className="mr-2">Világos</p>
+                <IconContext.Provider value={{ size: "25px" }}>
+                  <CiDark onClick={() => ThemeChange()} />
+                </IconContext.Provider>
+              </>
+            )}
+          </li>
         </ul>
-        <ul className="max-lg:col-start-9 col-start-10 m-0 flex list-none justify-end p-0">
+        <ul className="max-lg:col-start-9 col-start-12 m-0 flex list-none justify-end p-0">
           {!isLoggedIn ? (
             <CostumeLink to={"/login"}>Belépés</CostumeLink>
           ) : (

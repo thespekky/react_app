@@ -3,16 +3,20 @@
 @tailwind utilities;
 :root {
   --hover_bgcolor: rgb(73, 73, 73);
-  --hover_color: rgb(192, 243, 239);
-  --hover_color2: rgb(14, 164, 233);
 }
 .light {
-  --text-color: 245, 245, 245;
-  --background-color: 81, 67, 76;
+  --text-color: 0, 0, 0;
+  --background-color: 148, 147, 147;
+  --root-color: 21, 28, 33, 0.035;
+  --hover_color: rgb(255, 255, 255);
+  background-color: rgba(var(--root-color));
 }
 .dark {
   --text-color: 255, 255, 255;
   --background-color: 0, 0, 0;
+  --root-color: 21, 28, 33, 0.835;
+  --hover_color: rgb(182, 182, 182);
+  background-color: rgba(var(--root-color));
 }
 
 .navbar {
@@ -51,15 +55,17 @@
     align-content: center;
   }
 }
-.navbar > div:hover {
-  color: var(--hover_color2);
+.navbar > div > ul > li:hover {
+  color: var(--hover_color);
 }
-.navbar > ul:hover {
-  color: var(--hover_color2);
+.navbar > ul > li:hover {
+  color: var(--hover_color);
 }
 .active {
   background-color: #696969;
-  border-radius: 25px;
+  border-radius: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
   height: 25px;
 }
 .kosaras_adatok {

@@ -41,7 +41,7 @@ export default function Kosarasok({ searchbar = null }) {
         .filter((kosaras) => kosaras.name.includes(searchbar))
         .map((kosarasok) => (
           <div
-            className="m-1 mr-3 grid w-[380px] grid-cols-2 rounded-md border-2 p-0 shadow-md shadow-slate-600 hover:w-[400px] hover:cursor-pointer md:w-full md:grid-cols-4 md:pr-4"
+            className="m-1 mr-3 grid w-[400px] grid-cols-2 rounded-md border-2 p-0 shadow-md shadow-slate-600 hover:cursor-pointer md:w-full md:grid-cols-4 md:pr-4"
             key={kosarasok.ID}
             onClick={() => {
               navigate("/kosarasok/" + kosarasok.ID);
@@ -55,13 +55,17 @@ export default function Kosarasok({ searchbar = null }) {
               ></img>
             </div>
             <div className="m-1 p-1">
-              <div className="mt-1 tracking-wide">{kosarasok.name}</div>
-              <div className="mt-1 tracking-wide">
-                Született: {kosarasok.bdate}
+              <div className="mt-1 font-bold tracking-wide text-coloroftext">
+                {kosarasok.name}
               </div>
-              <div className="mt-1 tracking-wide">csapat: {kosarasok.team}</div>
+              <div className="mt-1 tracking-wide text-coloroftext">
+                <span className="font-bold">Született:</span> {kosarasok.bdate}
+              </div>
+              <div className="mt-1 tracking-wide text-coloroftext">
+                <span className="font-bold">csapat:</span> {kosarasok.team}
+              </div>
             </div>
-            <div className="col-span-2 mt-2 p-2 leading-7 tracking-wide md:row-span-1">
+            <div className="col-span-2 mt-2 p-2 leading-7 tracking-wide text-coloroftext md:row-span-1">
               {kosarasok.introduction}
             </div>
           </div>

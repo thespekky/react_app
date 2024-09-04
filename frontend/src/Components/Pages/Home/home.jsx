@@ -29,8 +29,9 @@ export default function Home() {
   }, []);
   return (
     <>
-      <CostumeSearch onsubmit={(e) => setSearchbar(e)} />
-
+      <div className="pt-3">
+        <CostumeSearch onsubmit={(e) => setSearchbar(e)} />
+      </div>
       <Suspense fallback={<Loading />}>
         <div className="flex w-full flex-row flex-wrap font-serif md:justify-center">
           <Kosarasok searchbar={searchbar} />
