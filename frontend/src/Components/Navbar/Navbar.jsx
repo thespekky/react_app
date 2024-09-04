@@ -66,14 +66,14 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="navbar bg-backgroundcolor text-coloroftext grid items-center ">
+      <nav className="navbar grid items-center bg-backgroundcolor text-coloroftext">
         <div className="">
-          <Link to={"/"} className="text-5x1 title flex justify-start ">
+          <Link to={"/"} className="text-5x1 title flex justify-start">
             Fő oldal
           </Link>
         </div>
         <div className="">
-          <ul className="p-0 m-0 list-none flex justify-center max-lg:gap-0 gap-3.5">
+          <ul className="max-lg:gap-0 m-0 flex list-none justify-center gap-3.5 p-0">
             {isLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
@@ -82,7 +82,7 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="">
-          <ul className="p-0 m-0 list-none row-span-3 col-span-1 flex justify-center max-lg:gap-0 gap-3.5">
+          <ul className="max-lg:gap-0 col-span-1 row-span-3 m-0 flex list-none justify-center gap-3.5 p-0">
             {isLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
@@ -91,7 +91,7 @@ export default function Navbar() {
           </ul>
         </div>
         <div className=" ">
-          <ul className="p-0 m-0 list-none max-lg:gap-0 flex justify-center gap-3.5">
+          <ul className="max-lg:gap-0 m-0 flex list-none justify-center gap-3.5 p-0">
             {isLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
@@ -99,14 +99,14 @@ export default function Navbar() {
             )}
           </ul>
         </div>
-        <ul className="p-0 m-0 list-none max-lg:col-start-9 flex justify-end col-start-9">
+        <ul className="max-lg:col-start-9 col-start-9 m-0 flex list-none justify-end p-0">
           {darktheme ? (
             <MdDarkMode onClick={() => ThemeChange()} />
           ) : (
             <CiDark onClick={() => ThemeChange()} />
           )}
         </ul>
-        <ul className="p-0 m-0 list-none max-lg:col-start-9 flex justify-end col-start-10">
+        <ul className="max-lg:col-start-9 col-start-10 m-0 flex list-none justify-end p-0">
           {!isLoggedIn ? (
             <CostumeLink to={"/login"}>Belépés</CostumeLink>
           ) : (
@@ -126,8 +126,8 @@ function CostumeLink({ to, children, ...props }) {
     <li
       className={
         isActive
-          ? "h-full p-1 flex items-center active text-inherit"
-          : "flex p-1 items-center h-full text-inherit"
+          ? "active flex h-full items-center p-1 text-inherit"
+          : "flex h-full items-center p-1 text-inherit"
       }
     >
       <Link to={to} {...props}>

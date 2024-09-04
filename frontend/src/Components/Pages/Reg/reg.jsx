@@ -41,7 +41,7 @@ export default function Reg() {
     if (!/^(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(formData.get("password"))) {
       showAlert(
         "A jelszó nem tartalmaz 8 karkaraktert vagy kicsi vagy nagybetűt",
-        "warning"
+        "warning",
       );
       return;
     }
@@ -66,7 +66,7 @@ export default function Reg() {
     <>
       <Alert />
       <div className="regdiv">
-        <form onSubmit={Reg} className=" bg-slate-500 w-96 p-3">
+        <form onSubmit={Reg} className="w-96 bg-slate-500 p-3">
           <label htmlFor="">Email</label>
           <br />
           <input type="email" className="p-4" name="email" />
@@ -92,7 +92,7 @@ export default function Reg() {
           <input type="text" className="p-4" name="Felhnev" />
           <input
             type="submit"
-            className=" my-4 w-40 flex self-center justify-center bg-sky-500 text-white"
+            className="my-4 flex w-40 justify-center self-center bg-sky-500 text-white"
             value="Regisztráció"
           />
         </form>

@@ -10,7 +10,7 @@ export async function Refreshtoken(body) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -41,7 +41,7 @@ export async function Register(path, body) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -60,7 +60,7 @@ export async function LoginUser(path, body) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -83,7 +83,7 @@ export async function GetAllData(path) {
               : null
           }`,
         },
-      }
+      },
     );
 
     const data = await response.json();
@@ -109,7 +109,7 @@ export async function GetAllDataInfScroll(path, body) {
           }`,
         },
         body: JSON.stringify(body),
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -132,7 +132,7 @@ export async function GetOneData(path) {
               : null
           }`,
         },
-      }
+      },
     );
     const data = await response.json();
     return data;

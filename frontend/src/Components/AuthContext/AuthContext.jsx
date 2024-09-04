@@ -1,4 +1,4 @@
-import  { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { Logout } from "../FetchData/fetchData";
@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     email: "",
     admin: 0,
   });
-  
+
   useEffect(() => {
     if (cookies.get("userData")) {
       setIsLoggedIn(true);
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       email: datas.email,
       admin: datas.admin,
     });
-    setIsLoggedIn(true);  
+    setIsLoggedIn(true);
   };
   const logout = () => {
     if (isLoggedIn) {
@@ -68,6 +68,6 @@ export const AuthProvider = ({ children }) => {
     </AutchContext.Provider>
   );
 };
-export const  useAuth = () => {
+export const useAuth = () => {
   return useContext(AutchContext);
 };

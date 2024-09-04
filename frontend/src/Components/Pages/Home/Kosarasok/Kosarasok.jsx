@@ -41,28 +41,27 @@ export default function Kosarasok({ searchbar = null }) {
         .filter((kosaras) => kosaras.name.includes(searchbar))
         .map((kosarasok) => (
           <div
-            className="hover:w-[400px] hover:cursor-pointer shadow-md shadow-slate-600 grid grid-cols-2 w-[380px] md:w-full md:pr-4 md:grid-cols-4 border-2 rounded-md  p-0 m-1 mr-3"
+            className="m-1 mr-3 grid w-[380px] grid-cols-2 rounded-md border-2 p-0 shadow-md shadow-slate-600 hover:w-[400px] hover:cursor-pointer md:w-full md:grid-cols-4 md:pr-4"
             key={kosarasok.ID}
             onClick={() => {
               navigate("/kosarasok/" + kosarasok.ID);
             }}
           >
-            <div className=" max-w-48 max-h-48 relative">
+            <div className="relative max-h-48 max-w-48">
               <img
                 src={image}
-                className=" w-auto h-auto object-cover rounded-[12px] pl-1 pt-1 md:p-[5px]"
+                className="h-auto w-auto rounded-[12px] object-cover pl-1 pt-1 md:p-[5px]"
+                loading="lazy"
               ></img>
             </div>
-            <div className=" m-1 p-1">
-              <div className=" mt-1 tracking-wide">{kosarasok.name}</div>
-              <div className=" mt-1 tracking-wide">
+            <div className="m-1 p-1">
+              <div className="mt-1 tracking-wide">{kosarasok.name}</div>
+              <div className="mt-1 tracking-wide">
                 Született: {kosarasok.bdate}
               </div>
-              <div className=" mt-1 tracking-wide">
-                csapat: {kosarasok.team}
-              </div>
+              <div className="mt-1 tracking-wide">csapat: {kosarasok.team}</div>
             </div>
-            <div className="p-2 col-span-2 md:row-span-1 mt-2 leading-7 tracking-wide">
+            <div className="col-span-2 mt-2 p-2 leading-7 tracking-wide md:row-span-1">
               {kosarasok.introduction}
             </div>
           </div>

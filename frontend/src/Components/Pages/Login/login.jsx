@@ -52,7 +52,7 @@ export default function Login() {
     <>
       <Alert />
       <div className="regdiv">
-        <form onSubmit={LoginForm} className=" bg-slate-500 w-96 p-3">
+        <form onSubmit={LoginForm} className="w-96 bg-slate-500 p-3">
           <label htmlFor="">Email</label>
           <br />
           <input type="email" className="p-4" name="email" />
@@ -65,12 +65,12 @@ export default function Login() {
           <div>
             <input
               type="submit"
-              className=" my-4 w-40 mr-2 hover:cursor-pointer bg-sky-500 text-white"
+              className="my-4 mr-2 w-40 bg-sky-500 text-white hover:cursor-pointer"
               value="Belépés"
             />
             <input
               type="button"
-              className=" my-4 w-40 mr-2 hover:cursor-pointer bg-sky-500 text-white"
+              className="my-4 mr-2 w-40 bg-sky-500 text-white hover:cursor-pointer"
               value="Regisztráció"
               onClick={() => navigate("/reg")}
             />

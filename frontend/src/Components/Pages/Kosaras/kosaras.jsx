@@ -59,31 +59,31 @@ export default function Kosaras() {
       <Alert />
       <Suspense fallback={<div>Adatok töltése</div>}>
         <div className="p-3">
-          <h2 className="text-center font-black italic p-3">{Kosaras.name}</h2>
+          <h2 className="p-3 text-center font-black italic">{Kosaras.name}</h2>
           <div className="flex md:flex-row md:flex-wrap">
-            <div className=" w-[80%] md:w-[100%] flex justify-start">
+            <div className="flex w-[80%] justify-start md:w-[100%]">
               {" "}
               <img
-                className=" w-auto h-auto object-cover rounded-[12px] pl-1 pt-1 md:p-[5px]"
+                className="h-auto w-auto rounded-[12px] object-cover pl-1 pt-1 md:p-[5px]"
                 src={"/src/Components/Pages/Home/" + Kosaras.image}
                 alt="kosaras képe"
               />
             </div>
-            <div className="w-[20%] md:w-[100%] bg-gray-200 p-1 m-1 rounded-md">
-              <div className=" mt-1 font-serif tracking-wide">
-                <p className="font-bold text-center">Születése dátum</p>
+            <div className="m-1 w-[20%] rounded-md bg-gray-200 p-1 md:w-[100%]">
+              <div className="mt-1 font-serif tracking-wide">
+                <p className="text-center font-bold">Születése dátum</p>
                 <p className="text-center">{Kosaras.bdate}</p>
               </div>
-              <div className=" mt-1 tracking-wide">
-                <p className="font-bold text-center">csapat</p>
+              <div className="mt-1 tracking-wide">
+                <p className="text-center font-bold">csapat</p>
                 <p className="text-center">{Kosaras.team}</p>
               </div>
             </div>
           </div>
-          <div className="p-1 m-3 rounded-lg bg-gray-50">
+          <div className="m-3 rounded-lg bg-gray-50 p-1">
             {Kosaras.introduction}
           </div>
-          <div className="p-1 m-3 rounded-lg bg-gray-50 kosaras_adatok">
+          <div className="kosaras_adatok m-3 rounded-lg bg-gray-50 p-1">
             <Eredmenyek_component Eredmenyek={Eredmenyek} />
             <Csaladtagok_component Csaladtagok={Csaladtagok} />
           </div>

@@ -32,7 +32,7 @@ export default function Home() {
       <CostumeSearch onsubmit={(e) => setSearchbar(e)} />
 
       <Suspense fallback={<Loading />}>
-        <div className="flex flex-wrap md:justify-center flex-row w-full font-serif">
+        <div className="flex w-full flex-row flex-wrap font-serif md:justify-center">
           <Kosarasok searchbar={searchbar} />
         </div>
       </Suspense>

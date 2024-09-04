@@ -11,14 +11,14 @@ export default function Csaladtagok({ Csaladtagok }) {
   }, []);
   return (
     <div className="max-width-half w-6/12">
-      <div className="w-full h-auto">
-        <h2 className="p-5 float-right">családtagok</h2>
+      <div className="h-auto w-full">
+        <h2 className="float-right p-5">családtagok</h2>
       </div>
-      <div className="relative w-full overflow-x-auto flex justify-end">
-        <table className="w-1/5 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border-4 border-gray-700 pb-3">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <div className="relative flex w-full justify-end overflow-x-auto">
+        <table className="w-1/5 border-4 border-gray-700 pb-3 text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3 mt-3">
+              <th scope="col" className="mt-3 px-6 py-3">
                 Vezetéknév
               </th>
               <th scope="col" className="px-6 py-3">

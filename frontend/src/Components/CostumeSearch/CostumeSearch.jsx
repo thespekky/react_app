@@ -1,17 +1,17 @@
 export default function CostumeSearch({ onsubmit = () => {} }) {
   return (
     <>
-      <form onSubmit={senddata} className="flex justify-center pt-2 pb-2">
+      <form onSubmit={senddata} className="flex justify-center pb-2 pt-2">
         <input
           type="text"
           placeholder="Keresés"
-          className="w-[80%] flex content-center border-2 border-slate-500 rounded-2xl p-1"
+          className="flex w-[80%] content-center rounded-2xl border-2 border-slate-500 p-1"
           name="userfilter"
           id=""
         />
         <button
           type="submit"
-          className="ml-2 p-2 font-semibold tracking-wider border-2 bg-green-700 rounded-full hover:bg-green-600 text-white"
+          className="ml-2 rounded-full border-2 bg-green-700 p-2 font-semibold tracking-wider text-white hover:bg-green-600"
         >
           Search
         </button>
