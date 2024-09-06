@@ -79,7 +79,7 @@ export default function Navbar() {
         <div className="">
           <ul className="max-lg:gap-0 m-0 flex list-none justify-center gap-3.5 p-0">
             {isLoggedIn ? (
-              <CostumeLink to="/valami">valami</CostumeLink>
+              <CostumeLink to="/kedvencek">Kedvencek</CostumeLink>
             ) : (
               <></>
             )}
