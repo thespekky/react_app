@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Sze 02. 21:16
+-- Létrehozás ideje: 2024. Sze 06. 21:45
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 8.0.1
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `react_app`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `kedvencek`
+--
+
+CREATE TABLE `kedvencek` (
+  `ID` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `kosarasok_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
@@ -135,6 +147,14 @@ INSERT INTO `users` (`ID`, `username`, `name`, `email`, `password`, `admin`) VAL
 --
 
 --
+-- A tábla indexei `kedvencek`
+--
+ALTER TABLE `kedvencek`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `user_id` (`user_id`,`kosarasok_id`),
+  ADD KEY `kosarasok_id` (`kosarasok_id`);
+
+--
 -- A tábla indexei `kosarasok`
 --
 ALTER TABLE `kosarasok`
@@ -164,11 +184,18 @@ ALTER TABLE `refreshtoken`
 -- A tábla indexei `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID` (`ID`);
 
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
 --
+
+--
+-- AUTO_INCREMENT a táblához `kedvencek`
+--
+ALTER TABLE `kedvencek`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `kosarasok`
@@ -197,6 +224,13 @@ ALTER TABLE `users`
 --
 -- Megkötések a kiírt táblákhoz
 --
+
+--
+-- Megkötések a táblához `kedvencek`
+--
+ALTER TABLE `kedvencek`
+  ADD CONSTRAINT `kedvencek_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`),
+  ADD CONSTRAINT `kedvencek_ibfk_2` FOREIGN KEY (`kosarasok_id`) REFERENCES `kosarasok` (`ID`);
 
 --
 -- Megkötések a táblához `kosarasok_csalad`
