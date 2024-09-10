@@ -94,3 +94,26 @@ exports.getKosarasCsaladtagok = async (req, res) => {
     return res.status(500).send({ message: "Kritikus hiba", success: false });
   }
 };
+exports.getKedvencek = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const kedvencek = await sequelize.query(
+      "SELECT ID, user_id,kosarasok_id introduction FROM kedvencek WHERE user_id=:id",
+      {
+        replacements: { id },
+        type: QueryTypes.SELECT,
+      }
+    );
+    if (kedvencek.length == 0) {
+      return res.status(404).send({
+        message: "Nincs a felhasználónak kedvencei",
+        kedvencek: kedvencek,
+        success: false,
+      });
+    }
+    return res.status(200).send({ kedvencek: kedvencek, success: true });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
+  }
+};

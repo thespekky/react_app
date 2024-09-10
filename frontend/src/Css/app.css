@@ -9,19 +9,26 @@
   --background-color: 148, 147, 147;
   --root-color: 21, 28, 33, 0.035;
   --hover_color: rgb(255, 255, 255);
+  --nav-hover-color: rgb(73, 73, 73);
   background-color: rgba(var(--root-color));
 }
 .dark {
-  --text-color: 255, 255, 255;
+  --text-color: 220, 220, 220;
   --background-color: 0, 0, 0;
   --root-color: 21, 28, 33, 0.835;
-  --hover_color: rgb(182, 182, 182);
+  --hover_color: rgb(255, 255, 255);
+  --nav-hover-color: rgb(54, 54, 54);
   background-color: rgba(var(--root-color));
 }
 
 .navbar {
   padding: 0 1rem;
   gap: 0px;
+  height: 48px;
+}
+.navbar > div > ul > li,
+.navbar > ul > li {
+  border-radius: 0.5rem;
 }
 .regdiv {
   position: static;
@@ -57,16 +64,15 @@
 }
 .navbar > div > ul > li:hover {
   color: var(--hover_color);
+  background-color: var(--nav-hover-color);
 }
 .navbar > ul > li:hover {
   color: var(--hover_color);
+  background-color: var(--nav-hover-color);
 }
 .active {
   background-color: #696969;
-  border-radius: 15px;
-  padding-left: 5px;
-  padding-right: 5px;
-  height: 25px;
+  border-radius: 0.5rem;
 }
 .kosaras_adatok {
   display: flex;

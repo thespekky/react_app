@@ -67,7 +67,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="navbar grid grid-cols-12 items-center bg-backgroundcolor pb-5 pt-5 text-coloroftext">
+      <nav className="navbar grid grid-cols-12 items-center bg-backgroundcolor pb-10 pt-10 text-coloroftext hover:bg-backgroundcolor">
         <div className="">
           <Link
             to={"/"}
@@ -77,7 +77,7 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="">
-          <ul className="max-lg:gap-0 m-0 flex list-none justify-center gap-3.5 p-0">
+          <ul className="max-lg:gap-0 m-0 flex list-none justify-center gap-3.5 p-1">
             {isLoggedIn ? (
               <CostumeLink to="/kedvencek">Kedvencek</CostumeLink>
             ) : (
@@ -86,7 +86,7 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="">
-          <ul className="max-lg:gap-0 col-span-1 row-span-3 m-0 flex list-none justify-center gap-3.5 p-0">
+          <ul className="max-lg:gap-0 col-span-1 row-span-3 m-0 flex list-none justify-center gap-3.5 p-1">
             {isLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
@@ -95,7 +95,7 @@ export default function Navbar() {
           </ul>
         </div>
         <div className=" ">
-          <ul className="max-lg:gap-0 m-0 flex list-none justify-center gap-3.5 p-0">
+          <ul className="max-lg:gap-0 m-0 flex list-none justify-center gap-3.5 p-1">
             {isLoggedIn ? (
               <CostumeLink to="/valami">valami</CostumeLink>
             ) : (
@@ -103,9 +103,9 @@ export default function Navbar() {
             )}
           </ul>
         </div>
-        <ul className="max-lg:col-start-9 col-start-11 m-0 flex list-none justify-end p-0">
-          <li className="flex">
-            {darktheme ? (
+        <ul className="max-lg:col-start-9 col-start-11 m-0 flex list-none justify-end p-1">
+          <li className="flex p-1">
+            {!darktheme ? (
               <>
                 <p className="mr-2">Sötét</p>
                 <IconContext.Provider value={{ size: "25px" }}>
@@ -122,7 +122,7 @@ export default function Navbar() {
             )}
           </li>
         </ul>
-        <ul className="max-lg:col-start-9 col-start-12 m-0 flex list-none justify-end p-0">
+        <ul className="max-lg:col-start-9 col-start-12 m-0 flex list-none justify-end p-1">
           {!isLoggedIn ? (
             <CostumeLink to={"/login"}>Belépés</CostumeLink>
           ) : (

@@ -6,6 +6,7 @@ export default {
       colors: {
         coloroftext: "rgba(var(--text-color))",
         backgroundcolor: "rgba(var(--background-color))",
+        navhovercolor: "rgba(var(--nav-hover-color))",
       },
     },
     screens: {
