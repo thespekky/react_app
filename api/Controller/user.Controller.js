@@ -157,7 +157,30 @@ exports.deleteKedvencek = async (req, res) => {
     );
     return res
       .status(200)
-      .send({ message: "Sikeres kedvencek törlés", success: true });
+      .send({ message: "Sikeres a kedvenc törlése", success: true });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
+  }
+};
+exports.addKedvencek = async (req, res) => {
+  try {
+    const id = req.body.kosarasok_id;
+    if (req.user[0].email != req.body.email) {
+      return res
+        .status(403)
+        .send({ message: "Rossz felhasználó", success: false });
+    }
+    const addkedvenc = await sequelize.query(
+      "INSERT INTO kedvencek (user_id,kosarasok_id) VALUES (:u_id,:k_id)",
+      {
+        replacements: { u_id: req.user[0].ID, k_id: id },
+        type: QueryTypes.INSERT,
+      }
+    );
+    return res
+      .status(200)
+      .send({ message: "Sikeres a kedvenc hozzáadása", success: true });
   } catch (e) {
     console.log(e);
     return res.status(500).send({ message: "Kritikus hiba", success: false });

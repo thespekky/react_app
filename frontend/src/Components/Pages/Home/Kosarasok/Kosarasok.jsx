@@ -1,4 +1,8 @@
-import { GetAllData, DeleteDataBody } from "../../../FetchData/fetchData";
+import {
+  GetAllData,
+  DeleteDataBody,
+  PostData,
+} from "../../../FetchData/fetchData";
 import PropTypes from "prop-types";
 import Cookies from "universal-cookie";
 import AlertContext from "../../../Alert/alert.context";
@@ -46,18 +50,34 @@ export default function Kosarasok({ searchbar = null }) {
       GetData();
     }
   }, []);
-  const kedvencekChange = (id) => {
+  const kedvencekChange = async (id) => {
     if (kedvencek.filter((k) => k.kosarasok_id === id).length > 0) {
-      DeleteDataBody("/kedvencek/" + id, { email: loggedUser.email });
+      const response = await DeleteDataBody("/kedvencek/" + id, {
+        email: loggedUser.email,
+      });
+      if (response.success) {
+        showAlert(response.message, "success");
+      }
       setKedvencek(kedvencek.filter((k) => k.kosarasok_id !== id));
-    } /*else {
+    } else {
       const body = {
-        id: id,
-        user_id: cookies.get("userData").id,
+        kosarasok_id: id,
+        user_id: loggedUser.id,
+        email: loggedUser.email,
       };
-      DeleteData("/kedvencek", body);
-      setKedvencek([...kedvencek, body]);
-    }*/
+      const response = await PostData("/kedvencek", body);
+      console.log(response);
+      if (response.success) {
+        showAlert(response.message, "success");
+      }
+      setKedvencek([
+        ...kedvencek,
+        {
+          kosarasok_id: id,
+          user_id: cookies.get("userData").id,
+        },
+      ]);
+    }
   };
   return (
     <>

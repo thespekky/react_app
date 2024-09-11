@@ -45,5 +45,6 @@ routes.delete(
   [authMiddleware.auth],
   userController.deleteKedvencek
 );
+routes.post("/kedvencek", [authMiddleware.auth], userController.addKedvencek);
 
 module.exports = routes;
