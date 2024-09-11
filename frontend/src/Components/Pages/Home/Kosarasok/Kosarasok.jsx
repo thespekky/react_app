@@ -1,4 +1,4 @@
-import { GetAllData } from "../../../FetchData/fetchData";
+import { GetAllData, DeleteDataBody } from "../../../FetchData/fetchData";
 import PropTypes from "prop-types";
 import Cookies from "universal-cookie";
 import AlertContext from "../../../Alert/alert.context";
@@ -9,12 +9,15 @@ import { useNavigate } from "react-router-dom";
 import { FaRegStar } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { IconContext } from "react-icons";
+import { useAuth } from "../../../AuthContext/AuthContext";
 const cookies = new Cookies();
 Kosarasok.propTypes = {
   searchbar: PropTypes.any, // Change 'any' to the expected prop type if known
 };
 export default function Kosarasok({ searchbar = null }) {
+  const { loggedUser } = useAuth();
   const [data, setData] = useState([]);
+  const [kedvencek, setKedvencek] = useState([]);
   const navigate = useNavigate();
   const [, sertAlert] = useContext(AlertContext);
   const showAlert = (text, type) => {
@@ -24,12 +27,18 @@ export default function Kosarasok({ searchbar = null }) {
     });
   };
   const GetData = async () => {
-    //await wait(1000);
     const data = await GetAllData("/getallKosarasok");
     if (data.success) {
       setData(data.users);
     } else {
       showAlert(data.message, "danger");
+    }
+
+    const kedv = await GetAllData("/kedvencek/" + cookies.get("userData").id);
+    if (kedv.success) {
+      setKedvencek(kedv.kedvencek);
+    } else {
+      showAlert(kedv.message, "danger");
     }
   };
   useEffect(() => {
@@ -37,6 +46,19 @@ export default function Kosarasok({ searchbar = null }) {
       GetData();
     }
   }, []);
+  const kedvencekChange = (id) => {
+    if (kedvencek.filter((k) => k.kosarasok_id === id).length > 0) {
+      DeleteDataBody("/kedvencek/" + id, { email: loggedUser.email });
+      setKedvencek(kedvencek.filter((k) => k.kosarasok_id !== id));
+    } /*else {
+      const body = {
+        id: id,
+        user_id: cookies.get("userData").id,
+      };
+      DeleteData("/kedvencek", body);
+      setKedvencek([...kedvencek, body]);
+    }*/
+  };
   return (
     <>
       <Alert />
@@ -47,9 +69,19 @@ export default function Kosarasok({ searchbar = null }) {
             className="m-1 mr-3 grid w-[400px] grid-cols-2 grid-rows-2 rounded-md border-2 p-0 shadow-md shadow-slate-600 hover:cursor-pointer md:w-full md:grid-cols-4 md:pr-4"
             key={kosarasok.ID}
           >
-            <div className="relative left-4 top-4 z-10 col-start-1 row-start-1 h-[25px] w-[25px]">
+            <div
+              className="relative left-4 top-4 z-10 col-start-1 row-start-1 h-[25px] w-[25px]"
+              onClick={() => {
+                kedvencekChange(kosarasok.ID);
+              }}
+            >
               <IconContext.Provider value={{ size: "25px", color: "orange" }}>
-                <FaRegStar />
+                {kedvencek.filter((k) => k.kosarasok_id === kosarasok.ID)
+                  .length > 0 ? (
+                  <FaStar />
+                ) : (
+                  <FaRegStar />
+                )}
               </IconContext.Provider>
             </div>
             <div

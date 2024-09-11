@@ -37,6 +37,7 @@ export default function Login() {
     const data = await LoginUser("/login", body);
     if (data.success) {
       login({
+        id: data.user[0].ID,
         username: data.user[0].username,
         name: data.user[0].name,
         email: data.user[0].email,

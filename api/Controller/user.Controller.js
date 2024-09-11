@@ -98,7 +98,7 @@ exports.getKedvencek = async (req, res) => {
   try {
     const id = req.params.id;
     const kedvencek = await sequelize.query(
-      "SELECT ID, user_id,kosarasok_id introduction FROM kedvencek WHERE user_id=:id",
+      "SELECT user_id,kosarasok_id FROM kedvencek WHERE user_id=:id",
       {
         replacements: { id },
         type: QueryTypes.SELECT,
@@ -108,10 +108,56 @@ exports.getKedvencek = async (req, res) => {
       return res.status(404).send({
         message: "Nincs a felhasználónak kedvencei",
         kedvencek: kedvencek,
-        success: false,
+        success: true,
       });
     }
     return res.status(200).send({ kedvencek: kedvencek, success: true });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
+  }
+};
+exports.deleteKedvencek = async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (req.user[0].email != req.body.email) {
+      return res
+        .status(403)
+        .send({ message: "Rossz felhasználó", success: false });
+    }
+    const vaneuser_id = await sequelize.query(
+      "SELECT ID FROM users WHERE ID=:u_id",
+      {
+        replacements: { u_id: req.user[0].ID },
+        type: QueryTypes.SELECT,
+      }
+    );
+    if (vaneuser_id.length == 0) {
+      return res
+        .status(404)
+        .send({ message: "Nincs ilyen felhasználó", success: false });
+    }
+    const vanekosaras_id = await sequelize.query(
+      "SELECT ID FROM kosarasok WHERE ID=:k_id",
+      {
+        replacements: { k_id: id },
+        type: QueryTypes.SELECT,
+      }
+    );
+    if (vanekosaras_id.length == 0) {
+      return res.status(404).send({ message: "Nincs Kosaras", success: false });
+    }
+
+    const response = await sequelize.query(
+      "DELETE FROM kedvencek WHERE user_id=:u_id AND kosarasok_id=:k_id",
+      {
+        replacements: { u_id: req.user[0].ID, k_id: id },
+        type: QueryTypes.DELETE,
+      }
+    );
+    return res
+      .status(200)
+      .send({ message: "Sikeres kedvencek törlés", success: true });
   } catch (e) {
     console.log(e);
     return res.status(500).send({ message: "Kritikus hiba", success: false });

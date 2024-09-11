@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const cookies = new Cookies();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedUser, setLoggedUser] = useState({
-    //id: 0,
+    id: 0,
     username: "",
     name: "",
     email: "",
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     if (cookies.get("userData")) {
       setIsLoggedIn(true);
       setLoggedUser({
-        //id: cookies.get("userData").id,
+        id: cookies.get("userData").id,
         username: cookies.get("userData").username,
         name: cookies.get("userData").name,
         email: cookies.get("userData").email,
@@ -36,9 +36,10 @@ export const AuthProvider = ({ children }) => {
   }, [isLoggedIn]);
 
   const login = (datas) => {
+    console.log(datas.id);
     cookies.set("userData", datas, { path: "/" });
     setLoggedUser({
-      //id: datas.id,
+      id: datas.id,
       username: datas.username,
       name: datas.name,
       email: datas.email,
@@ -52,7 +53,7 @@ export const AuthProvider = ({ children }) => {
       cookies.remove("userData", { path: "/" });
       setIsLoggedIn(false);
       setLoggedUser({
-        //id: cookies.get("userData").id,
+        id: 0,
         username: "",
         name: "",
         email: "",

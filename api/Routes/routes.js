@@ -35,6 +35,15 @@ routes.get(
   userController.getKosarasCsaladtagok
 );
 
-routes.get("/kedvencek", [authMiddleware.auth], userController.getKedvencek);
+routes.get(
+  "/kedvencek/:id",
+  [authMiddleware.auth],
+  userController.getKedvencek
+);
+routes.delete(
+  "/kedvencek/:id",
+  [authMiddleware.auth],
+  userController.deleteKedvencek
+);
 
 module.exports = routes;
