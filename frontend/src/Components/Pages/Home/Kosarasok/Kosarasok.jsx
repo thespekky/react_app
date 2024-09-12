@@ -90,7 +90,7 @@ export default function Kosarasok({ searchbar = null }) {
             key={kosarasok.ID}
           >
             <div
-              className="relative left-4 top-4 z-10 col-start-1 row-start-1 h-[25px] w-[25px]"
+              className="relative left-4 top-5 z-10 col-start-1 row-start-1 h-[25px] w-[25px]"
               onClick={() => {
                 kedvencekChange(kosarasok.ID);
               }}

@@ -1,9 +1,17 @@
 import { useEffect, useState, useContext, Suspense } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
-import { GetOneData, GetAllData } from "../../FetchData/fetchData";
+import {
+  GetOneData,
+  GetAllData,
+  PostData,
+  DeleteDataBody,
+} from "../../FetchData/fetchData";
 import AlertContext from "../../Alert/alert.context";
 import { Alert } from "../../Alert/Alert";
+import { FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
+import { IconContext } from "react-icons";
 import Eredmenyek_component from "./Eredmenyek";
 import Csaladtagok_component from "./Csaladtagok";
 const cookie = new Cookies();
@@ -12,6 +20,7 @@ export default function Kosaras() {
   const [Kosaras, setKosaras] = useState([]);
   const [Eredmenyek, setEredmenyek] = useState([]);
   const [Csaladtagok, setCsaladtagok] = useState([]);
+  const [kedvenc, setKedvenc] = useState(false);
   const id = useParams().id;
   const navigate = useNavigate();
   const [, setAlert] = useContext(AlertContext);
@@ -20,6 +29,17 @@ export default function Kosaras() {
       text,
       type,
     });
+  };
+  const getKedvenc = async () => {
+    const kedvenc = await PostData("/kedvenc/", {
+      user_id: cookie.get("userData").id,
+      kosaras_id: id,
+    });
+    if (kedvenc.kedvenc) {
+      setKedvenc(true);
+    } else {
+      setKedvenc(false);
+    }
   };
   const GetData = async () => {
     const data = await GetOneData("/kosarasok/" + id);
@@ -45,6 +65,7 @@ export default function Kosaras() {
       showAlert(data.message, "danger");
     }
   };
+
   useEffect(() => {
     if (!cookie.get("userData")) {
       navigate("/");
@@ -52,8 +73,35 @@ export default function Kosaras() {
       GetData();
       getKosarasEredmenyek();
       GetCsapadtagok();
+      getKedvenc();
     }
   }, []);
+  const kedvencChange = async () => {
+    if (kedvenc) {
+      const response = await DeleteDataBody("/kedvencek/" + id, {
+        email: cookie.get("userData").email,
+        user_id: cookie.get("userData").id,
+      });
+      if (response.success) {
+        showAlert(response.message, "success");
+      } else {
+        showAlert(response.message, "danger");
+      }
+      setKedvenc(false);
+    } else {
+      setKedvenc(true);
+      const response = await PostData("/kedvenc/add", {
+        user_id: cookie.get("userData").id,
+        kosaras_id: id,
+      });
+      if (response.success) {
+        showAlert(response.message, "success");
+      } else {
+        showAlert(response.message, "danger");
+      }
+    }
+  };
+
   return (
     <>
       <Alert />
@@ -62,7 +110,16 @@ export default function Kosaras() {
           <h2 className="p-3 text-center font-black italic">{Kosaras.name}</h2>
           <div className="flex md:flex-row md:flex-wrap">
             <div className="flex w-[80%] justify-start md:w-[100%]">
-              {" "}
+              <div
+                className="relative left-10 top-5 z-10 col-start-1 row-start-1 h-[25px] w-[25px]"
+                onClick={() => {
+                  kedvencChange();
+                }}
+              >
+                <IconContext.Provider value={{ size: "25px", color: "orange" }}>
+                  {kedvenc ? <FaStar /> : <FaRegStar />}
+                </IconContext.Provider>
+              </div>{" "}
               <img
                 className="h-auto w-auto rounded-[12px] object-cover pl-1 pt-1 md:p-[5px]"
                 src={"/src/Components/Pages/Home/" + Kosaras.image}

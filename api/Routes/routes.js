@@ -40,6 +40,8 @@ routes.get(
   [authMiddleware.auth],
   userController.getKedvencek
 );
+routes.post("/kedvenc/", [authMiddleware.auth], userController.getKedvenc);
+routes.post("/kedvenc/add", [authMiddleware.auth], userController.addKedvenc);
 routes.delete(
   "/kedvencek/:id",
   [authMiddleware.auth],

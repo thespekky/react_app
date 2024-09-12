@@ -117,6 +117,59 @@ exports.getKedvencek = async (req, res) => {
     return res.status(500).send({ message: "Kritikus hiba", success: false });
   }
 };
+exports.getKedvenc = async (req, res) => {
+  try {
+    if (!req.body.user_id || !req.body.kosaras_id) {
+      return res.status(400).send({
+        message: "Hiányzó adatok",
+        success: false,
+      });
+    }
+    const kedvenc = await sequelize.query(
+      "SELECT user_id,kosarasok_id FROM kedvencek WHERE user_id=:id AND kosarasok_id=:k_id",
+      {
+        replacements: { id: req.body.user_id, k_id: req.body.kosaras_id },
+        type: QueryTypes.SELECT,
+      }
+    );
+    if (kedvenc.length == 0) {
+      return res.status(404).send({
+        message: "Nincs a felhasználónak kedvencei",
+        kedvenc: false,
+        success: true,
+      });
+    }
+    return res
+      .status(200)
+      .send({ message: "sikeres lekérdezés", kedvenc: true, success: true });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
+  }
+};
+exports.addKedvenc = async (req, res) => {
+  try {
+    if (!req.body.user_id || !req.body.kosaras_id) {
+      return res.status(400).send({
+        message: "Hiányzó adatok",
+        success: false,
+      });
+    }
+    const kedvenc = await sequelize.query(
+      "INSERT INTO kedvencek (user_id,kosarasok_id) VALUES (:id,:k_id)",
+      {
+        replacements: { id: req.body.user_id, k_id: req.body.kosaras_id },
+        type: QueryTypes.INSERT,
+      }
+    );
+    return res
+      .status(200)
+      .send({ message: "sikeres hozzáadás", kedvenc: true, success: true });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send({ message: "Kritikus hiba", success: false });
+  }
+};
 exports.deleteKedvencek = async (req, res) => {
   try {
     const id = req.params.id;
