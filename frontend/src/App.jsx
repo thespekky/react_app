@@ -9,6 +9,7 @@ import Login from "./Components/Pages/Login/login.jsx";
 import Logout from "./Components/Pages/Logout/logout.jsx";
 import Kosaras from "./Components/Pages/Kosaras/kosaras.jsx";
 import Kedvencek from "./Components/Pages/Kedvencek/kedvencek.jsx";
+import Footer from "./Components/Footer/Footer.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/kosarasok/:id" element={<Kosaras />}></Route>
             <Route path="/kedvencek" element={<Kedvencek />}></Route>
           </Routes>
+          <Footer />
         </AlertPRovider>
       </AuthProvider>
     </>
