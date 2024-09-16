@@ -34,5 +34,9 @@ export const Alert = () => {
     return null;
   }
   const fullStyles = { ...alertStyles, ...severityStyles[alert.type] };
-  return <div style={fullStyles}>{alert.text}</div>;
+  return (
+    <div style={fullStyles} className="z-50">
+      {alert.text}
+    </div>
+  );
 };

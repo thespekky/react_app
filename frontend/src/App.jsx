@@ -18,12 +18,12 @@ function App() {
         <AlertPRovider>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/reg" element={<Reg />}></Route>
-            <Route path="/logout" element={<Logout />}></Route>
-            <Route path="/kosarasok/:id" element={<Kosaras />}></Route>
-            <Route path="/kedvencek" element={<Kedvencek />}></Route>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/reg" element={<Reg />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/kosarasok/:id" element={<Kosaras />} />
+            <Route path="/kedvencek" element={<Kedvencek />} />
           </Routes>
           <Footer />
         </AlertPRovider>

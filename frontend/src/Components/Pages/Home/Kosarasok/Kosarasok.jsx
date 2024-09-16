@@ -33,6 +33,7 @@ export default function Kosarasok({ searchbar = null }) {
   const GetData = async () => {
     const data = await GetAllData("/getallKosarasok");
     if (data.success) {
+      console.log(data.users);
       setData(data.users);
     } else {
       showAlert(data.message, "danger");
@@ -66,7 +67,6 @@ export default function Kosarasok({ searchbar = null }) {
         email: loggedUser.email,
       };
       const response = await PostData("/kedvencek", body);
-      console.log(response);
       if (response.success) {
         showAlert(response.message, "success");
       }
@@ -86,7 +86,7 @@ export default function Kosarasok({ searchbar = null }) {
         .filter((kosaras) => kosaras.name.includes(searchbar))
         .map((kosarasok) => (
           <div
-            className="m-1 mr-3 grid w-[400px] grid-cols-2 grid-rows-2 rounded-md border-2 p-0 shadow-md shadow-slate-600 hover:cursor-pointer md:w-full md:grid-cols-4 md:pr-4"
+            className="m-1 mr-3 grid w-[400px] grid-cols-2 grid-rows-2 rounded-md border-2 p-0 shadow-md shadow-slate-600 hover:cursor-pointer md:w-full md:grid-cols-4 md:grid-rows-1 md:pr-4"
             key={kosarasok.ID}
           >
             <div

@@ -104,14 +104,28 @@ exports.getKedvencek = async (req, res) => {
         type: QueryTypes.SELECT,
       }
     );
+    const kedvencKosarasok = await sequelize.query(
+      "SELECT * FROM kosarasok k JOIN kedvencek ke ON k.id = ke.kosarasok_id WHERE ke.user_id = 11",
+      {
+        replacements: { ids: id },
+        type: QueryTypes.SELECT,
+      }
+    );
     if (kedvencek.length == 0) {
-      return res.status(404).send({
+      return res.status(200).send({
         message: "Nincs a felhasználónak kedvencei",
         kedvencek: kedvencek,
+        kedvencKosarasok: kedvencKosarasok,
         success: true,
       });
     }
-    return res.status(200).send({ kedvencek: kedvencek, success: true });
+    return res
+      .status(200)
+      .send({
+        kedvencek: kedvencek,
+        kedvencKosarasok: kedvencKosarasok,
+        success: true,
+      });
   } catch (e) {
     console.log(e);
     return res.status(500).send({ message: "Kritikus hiba", success: false });
