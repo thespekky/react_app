@@ -7,6 +7,7 @@ export default {
         coloroftext: "rgba(var(--text-color))",
         backgroundcolor: "rgba(var(--background-color))",
         navhovercolor: "rgba(var(--nav-hover-color))",
+        cardshadow: "rgba(var(--card-shadow))",
       },
     },
     screens: {
