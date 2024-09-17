@@ -36,11 +36,14 @@ export default function Kedvencek() {
     }
   }, []);
   async function deleteKedvencek(id) {
-    const response = await DeleteDataBody("/kedvencek/" + id, {
-      email: loggedUser.email,
-    });
-    if (response.success) {
-      showAlert(response.message, "success");
+    let text = "Biztos hogy törölni akarod a kedvencet?";
+    if (confirm(text) == true) {
+      const response = await DeleteDataBody("/kedvencek/" + id, {
+        email: loggedUser.email,
+      });
+      if (response.success) {
+        showAlert(response.message, "success");
+      }
     }
   }
   return (
@@ -84,7 +87,7 @@ export default function Kedvencek() {
                   </div>
 
                   <div
-                    className="flex justify-center p-2"
+                    className="mt-5 flex justify-center p-2 hover:cursor-pointer"
                     onClick={() => {
                       deleteKedvencek(kosaras.ID);
                     }}

@@ -242,6 +242,7 @@ exports.addKedvencek = async (req, res) => {
   try {
     const id = req.body.kosarasok_id;
     if (req.user[0].email != req.body.email) {
+      t.rollback();
       return res
         .status(403)
         .send({ message: "Rossz felhasználó", success: false });
@@ -251,12 +252,15 @@ exports.addKedvencek = async (req, res) => {
       {
         replacements: { u_id: req.user[0].ID, k_id: id },
         type: QueryTypes.INSERT,
+        transaction: t,
       }
     );
+    t.commit();
     return res
       .status(200)
       .send({ message: "Sikeres a kedvenc hozzáadása", success: true });
   } catch (e) {
+    t.rollback();
     console.log(e);
     return res.status(500).send({ message: "Kritikus hiba", success: false });
   }
