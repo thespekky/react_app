@@ -8,6 +8,7 @@ export default {
         backgroundcolor: "rgba(var(--background-color))",
         navhovercolor: "rgba(var(--nav-hover-color))",
         cardshadow: "rgba(var(--card-shadow))",
+        linkcolor: "rgba(var(--link-color))",
       },
     },
     screens: {

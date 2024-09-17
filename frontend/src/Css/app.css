@@ -11,6 +11,7 @@
   --hover_color: rgb(255, 255, 255);
   --nav-hover-color: rgb(73, 73, 73);
   --card-shadow: 71 85 105;
+  --link-color: 0, 0, 255;
   --card-shadow: background-color: rgba(var(--root-color));
 }
 .dark {
@@ -20,6 +21,7 @@
   --hover_color: rgb(255, 255, 255);
   --nav-hover-color: rgb(54, 54, 54);
   --card-shadow: 71 85 105;
+  --link-color: 0, 0, 150;
   background-color: rgba(var(--root-color));
 }
 

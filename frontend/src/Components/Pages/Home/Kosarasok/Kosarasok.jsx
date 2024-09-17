@@ -33,7 +33,6 @@ export default function Kosarasok({ searchbar = null }) {
   const GetData = async () => {
     const data = await GetAllData("/getallKosarasok");
     if (data.success) {
-      console.log(data.users);
       setData(data.users);
     } else {
       showAlert(data.message, "danger");

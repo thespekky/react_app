@@ -1,5 +1,5 @@
 const sequelize = require("../Models/dbModell");
-const { QueryTypes } = require("sequelize");
+const { QueryTypes, Transaction } = require("sequelize");
 exports.getallKosarasok = async (req, res) => {
   try {
     if (req.user[0] != null) {
@@ -119,13 +119,11 @@ exports.getKedvencek = async (req, res) => {
         success: true,
       });
     }
-    return res
-      .status(200)
-      .send({
-        kedvencek: kedvencek,
-        kedvencKosarasok: kedvencKosarasok,
-        success: true,
-      });
+    return res.status(200).send({
+      kedvencek: kedvencek,
+      kedvencKosarasok: kedvencKosarasok,
+      success: true,
+    });
   } catch (e) {
     console.log(e);
     return res.status(500).send({ message: "Kritikus hiba", success: false });
@@ -185,9 +183,11 @@ exports.addKedvenc = async (req, res) => {
   }
 };
 exports.deleteKedvencek = async (req, res) => {
+  const t = await sequelize.transaction();
   try {
     const id = req.params.id;
     if (req.user[0].email != req.body.email) {
+      t.rollback();
       return res
         .status(403)
         .send({ message: "Rossz felhasználó", success: false });
@@ -197,9 +197,11 @@ exports.deleteKedvencek = async (req, res) => {
       {
         replacements: { u_id: req.user[0].ID },
         type: QueryTypes.SELECT,
+        transaction: t,
       }
     );
     if (vaneuser_id.length == 0) {
+      t.rollback();
       return res
         .status(404)
         .send({ message: "Nincs ilyen felhasználó", success: false });
@@ -209,9 +211,11 @@ exports.deleteKedvencek = async (req, res) => {
       {
         replacements: { k_id: id },
         type: QueryTypes.SELECT,
+        transaction: t,
       }
     );
     if (vanekosaras_id.length == 0) {
+      t.rollback();
       return res.status(404).send({ message: "Nincs Kosaras", success: false });
     }
 
@@ -220,17 +224,21 @@ exports.deleteKedvencek = async (req, res) => {
       {
         replacements: { u_id: req.user[0].ID, k_id: id },
         type: QueryTypes.DELETE,
+        transaction: t,
       }
     );
+    t.commit();
     return res
       .status(200)
       .send({ message: "Sikeres a kedvenc törlése", success: true });
   } catch (e) {
+    t.rollback();
     console.log(e);
     return res.status(500).send({ message: "Kritikus hiba", success: false });
   }
 };
 exports.addKedvencek = async (req, res) => {
+  const t = await sequelize.transaction();
   try {
     const id = req.body.kosarasok_id;
     if (req.user[0].email != req.body.email) {

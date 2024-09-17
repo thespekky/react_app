@@ -3,12 +3,14 @@ import { Alert } from "../../Alert/Alert";
 import AlertContext from "../../Alert/alert.context";
 import { useAuth } from "../../AuthContext/AuthContext";
 import { useContext, useEffect, useState } from "react";
-import { GetAllData } from "../../FetchData/fetchData";
+import { GetAllData, DeleteDataBody } from "../../FetchData/fetchData";
 import { useNavigate } from "react-router-dom";
 import image from "../Home/image.png";
+import { MdDelete } from "react-icons/md";
+import { IconContext } from "react-icons";
 const cookies = new Cookies();
 export default function Kedvencek() {
-  const { isLoggedIn } = useAuth();
+  const { loggedUser } = useAuth();
   const navigate = useNavigate();
   const [, sertAlert] = useContext(AlertContext);
   const [kedvenckosarasok, setKedvenckosarasok] = useState([]);
@@ -23,7 +25,6 @@ export default function Kedvencek() {
       "/kedvencek/" + cookies.get("userData").id,
     );
     if (kedvenc.success) {
-      console.log(kedvenc.kedvencKosarasok);
       setKedvenckosarasok(kedvenc.kedvencKosarasok);
     } else {
       showAlert(kedvenc.message, "danger");
@@ -34,6 +35,14 @@ export default function Kedvencek() {
       getKedvencek();
     }
   }, []);
+  async function deleteKedvencek(id) {
+    const response = await DeleteDataBody("/kedvencek/" + id, {
+      email: loggedUser.email,
+    });
+    if (response.success) {
+      showAlert(response.message, "success");
+    }
+  }
   return (
     <>
       <Alert />
@@ -67,8 +76,25 @@ export default function Kedvencek() {
                 <td className="px-6 py-4">{kosaras.team}</td>
                 <td className="px-6 py-4">{kosaras.introduction}</td>
                 <td className="px-6 py-4">
-                  <div>kosaras</div>
-                  <div>törlés</div>
+                  <div
+                    className="text-linkcolor flex justify-center p-2 underline hover:cursor-pointer"
+                    onClick={() => navigate("/kosarasok/" + kosaras.ID)}
+                  >
+                    <a>Ugrás</a>
+                  </div>
+
+                  <div
+                    className="flex justify-center p-2"
+                    onClick={() => {
+                      deleteKedvencek(kosaras.ID);
+                    }}
+                  >
+                    <IconContext.Provider
+                      value={{ size: "20px", color: "red" }}
+                    >
+                      <MdDelete />
+                    </IconContext.Provider>
+                  </div>
                 </td>
               </tr>
             ))}
