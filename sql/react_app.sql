@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Sze 06. 21:45
+-- Létrehozás ideje: 2024. Sze 29. 19:01
 -- Kiszolgáló verziója: 10.4.17-MariaDB
 -- PHP verzió: 8.0.1
 
@@ -28,10 +28,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `kedvencek` (
-  `ID` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `kosarasok_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `kedvencek`
+--
+
+INSERT INTO `kedvencek` (`user_id`, `kosarasok_id`) VALUES
+(5, 4),
+(11, 3);
 
 -- --------------------------------------------------------
 
@@ -45,18 +52,20 @@ CREATE TABLE `kosarasok` (
   `bdate` date NOT NULL,
   `team` varchar(200) COLLATE utf8_hungarian_ci NOT NULL,
   `image` varchar(200) COLLATE utf8_hungarian_ci NOT NULL,
-  `introduction` varchar(200) COLLATE utf8_hungarian_ci NOT NULL
+  `introduction` varchar(200) COLLATE utf8_hungarian_ci NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `kosarasok`
 --
 
-INSERT INTO `kosarasok` (`ID`, `name`, `bdate`, `team`, `image`, `introduction`) VALUES
-(1, 'Valaki Valami', '2022-10-18', 'Csapat1', 'image.png', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta error, placeat illo veniam iste sunt maxime eaque repellendus! Perferendis natus saepe ad veritatis sit dolores voluptatibus harum elige'),
-(2, 'Valaki Valami 1', '2002-10-18', 'CSapat2', 'image.png', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta error, placeat illo veniam iste sunt maxime eaque repellendus! Perferendis natus saepe ad veritatis sit dolores voluptatibus harum elige'),
-(3, 'Valaki Valami 2', '2012-10-18', 'CSapat3', 'image.png', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta error, placeat illo veniam iste sunt maxime eaque'),
-(4, 'Valami10', '2001-11-22', 'CS10', 'image.png', 'Intro');
+INSERT INTO `kosarasok` (`ID`, `name`, `bdate`, `team`, `image`, `introduction`, `start_date`, `end_date`) VALUES
+(1, 'Valaki Valami', '2022-10-18', 'Csapat1', 'image.png', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta error, placeat illo veniam iste sunt maxime eaque repellendus! Perferendis natus saepe ad veritatis sit dolores voluptatibus harum elige', '2024-04-01', NULL),
+(2, 'Valaki Valami 1', '2002-10-18', 'CSapat2', 'image.png', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta error, placeat illo veniam iste sunt maxime eaque repellendus! Perferendis natus saepe ad veritatis sit dolores voluptatibus harum elige', '2023-03-25', '2024-09-04'),
+(3, 'Valaki Valami 2', '2012-10-18', 'CSapat3', 'image.png', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta error, placeat illo veniam iste sunt maxime eaque', '2024-09-01', '2024-09-19'),
+(4, 'Valami10', '2001-11-22', 'CS10', 'image.png', 'Intro', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -150,7 +159,6 @@ INSERT INTO `users` (`ID`, `username`, `name`, `email`, `password`, `admin`) VAL
 -- A tábla indexei `kedvencek`
 --
 ALTER TABLE `kedvencek`
-  ADD PRIMARY KEY (`ID`),
   ADD KEY `user_id` (`user_id`,`kosarasok_id`),
   ADD KEY `kosarasok_id` (`kosarasok_id`);
 
@@ -190,12 +198,6 @@ ALTER TABLE `users`
 --
 -- A kiírt táblák AUTO_INCREMENT értéke
 --
-
---
--- AUTO_INCREMENT a táblához `kedvencek`
---
-ALTER TABLE `kedvencek`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `kosarasok`
