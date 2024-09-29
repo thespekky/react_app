@@ -6,13 +6,13 @@
 }
 .light {
   --text-color: 0, 0, 0;
-  --background-color: 148, 147, 147;
+  --background-color: 148, 147, 137;
   --root-color: 21, 28, 33, 0.035;
   --hover_color: rgb(255, 255, 255);
   --nav-hover-color: rgb(73, 73, 73);
   --card-shadow: 71 85 105;
   --link-color: 0, 0, 255;
-  --card-shadow: background-color: rgba(var(--root-color));
+  background-color: rgba(var(--root-color));
 }
 .dark {
   --text-color: 220, 220, 220;

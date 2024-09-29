@@ -27,7 +27,7 @@ exports.getOneKosaras = async (req, res) => {
   try {
     if (req.user[0] != null) {
       const kosaras = await sequelize.query(
-        "SELECT ID, name, bdate, team,image,introduction FROM kosarasok WHERE ID=:ID",
+        "SELECT * FROM kosarasok WHERE ID=:ID",
         {
           replacements: { ID: req.params.id },
           type: QueryTypes.SELECT,

@@ -137,6 +137,16 @@ export default function Kosaras() {
                 <p className="text-center font-bold">csapat</p>
                 <p className="text-center">{Kosaras.team}</p>
               </div>
+              <div className="mt-1 tracking-wide">
+                <p className="text-center font-bold">Karrier kezdete</p>
+                <p className="text-center">{Kosaras.start_date}</p>
+              </div>
+              <div className="mt-1 tracking-wide">
+                <p className="text-center font-bold">Karrier vége</p>
+                <p className="text-center">
+                  {Kosaras.end_date ? Kosaras.end_date : "Még mindig játszik"}
+                </p>
+              </div>
             </div>
           </div>
           <div className="mt-3 rounded-lg bg-gray-50 p-1">

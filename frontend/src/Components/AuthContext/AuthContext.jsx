@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
   const navigate = useNavigate();
   useEffect(() => {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       navigate("/");
     }
   }, [isLoggedIn]);
