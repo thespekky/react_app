@@ -6,6 +6,12 @@ const bcrypt = require("bcrypt");
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(404).send({
+        message: "Nincs minden adat megadva",
+        success: false,
+      });
+    }
     const user = await sequelize.query(
       "SELECT ID, username, name, email,admin,password FROM users WHERE email=:Email",
       {

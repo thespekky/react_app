@@ -29,11 +29,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/");
-    }
-  }, [isLoggedIn]);
 
   const login = (datas) => {
     console.log(datas.id);

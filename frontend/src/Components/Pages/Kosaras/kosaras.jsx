@@ -111,22 +111,26 @@ export default function Kosaras() {
             {Kosaras.name}
           </h2>
           <div className="flex md:flex-row md:flex-wrap">
-            <div className="w-[80%] justify-start md:w-[100%] md:justify-center">
-              <div
-                className="relative left-3 top-11 z-10 col-start-1 row-start-1 h-[25px] w-[25px]"
-                onClick={() => {
-                  kedvencChange();
-                }}
-              >
-                <IconContext.Provider value={{ size: "25px", color: "orange" }}>
-                  {kedvenc ? <FaStar /> : <FaRegStar />}
-                </IconContext.Provider>
-              </div>{" "}
-              <img
-                className="h-auto w-auto rounded-[12px] object-cover pt-1 md:p-[5px]"
-                src={"/src/Components/Pages/Home/" + Kosaras.image}
-                alt="kosaras képe"
-              />
+            <div className="flex w-[80%] justify-start md:w-[100%] md:justify-center">
+              <div>
+                <div
+                  className="relative left-3 top-11 z-10 col-start-1 row-start-1 h-[25px] w-[25px]"
+                  onClick={() => {
+                    kedvencChange();
+                  }}
+                >
+                  <IconContext.Provider
+                    value={{ size: "25px", color: "orange" }}
+                  >
+                    {kedvenc ? <FaStar /> : <FaRegStar />}
+                  </IconContext.Provider>
+                </div>{" "}
+                <img
+                  className="h-auto w-auto rounded-[12px] object-cover pt-1 md:p-[5px]"
+                  src={"/src/Components/Pages/Home/" + Kosaras.image}
+                  alt="kosaras képe"
+                />
+              </div>
             </div>
             <div className="h-auto w-[20%] rounded-md bg-gray-200 p-1 md:w-[100%]">
               <div className="mt-1 font-serif tracking-wide">

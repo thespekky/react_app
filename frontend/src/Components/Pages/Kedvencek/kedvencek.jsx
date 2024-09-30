@@ -8,12 +8,18 @@ import { useNavigate } from "react-router-dom";
 import image from "../Home/image.png";
 import { MdDelete } from "react-icons/md";
 import { IconContext } from "react-icons";
+import { FaArrowDown } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa";
 const cookies = new Cookies();
 export default function Kedvencek() {
   const { loggedUser } = useAuth();
   const navigate = useNavigate();
   const [, sertAlert] = useContext(AlertContext);
   const [kedvenckosarasok, setKedvenckosarasok] = useState([]);
+  const [tableState, setTableState] = useState({
+    name: false,
+    team: false,
+  });
   const showAlert = (text, type) => {
     sertAlert({
       text,
@@ -46,6 +52,29 @@ export default function Kedvencek() {
       }
     }
   }
+  async function SortKosarasok({ where }) {
+    const sortedKedvenckosarasok = kedvenckosarasok.sort((a, b) => {
+      if (tableState[where]) {
+        if (a[where] < b[where]) {
+          return -1;
+        }
+        if (a[where] > b[where]) {
+          return 1;
+        }
+        return 0;
+      } else {
+        if (a[where] > b[where]) {
+          return -1;
+        }
+        if (a[where] < b[where]) {
+          return 1;
+        }
+        return 0;
+      }
+    });
+    setTableState({ ...tableState, [where]: !tableState[where] });
+    setKedvenckosarasok(sortedKedvenckosarasok);
+  }
   return (
     <>
       <Alert />
@@ -58,11 +87,41 @@ export default function Kedvencek() {
         <table className="w-full border-4 border-gray-700 pb-3 text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="mt-3 w-40 px-6 py-3">
-                Név
+              <th
+                scope="col"
+                className="mt-3 w-40 px-6 py-3 hover:cursor-pointer"
+                onClick={() => SortKosarasok({ where: "name" })}
+              >
+                <div className="flex">
+                  <p className="pr-1">Név</p>
+                  {tableState.name ? (
+                    <IconContext.Provider value={{ size: "15px" }}>
+                      <FaArrowUp />
+                    </IconContext.Provider>
+                  ) : (
+                    <IconContext.Provider value={{ size: "15px" }}>
+                      <FaArrowDown />
+                    </IconContext.Provider>
+                  )}
+                </div>
               </th>
-              <th scope="col" className="w-40 px-6 py-3">
-                Csapat
+              <th
+                scope="col"
+                className="w-40 px-6 py-3 hover:cursor-pointer"
+                onClick={() => SortKosarasok({ where: "team" })}
+              >
+                <div className="flex">
+                  <p className="pr-1">Csapat</p>
+                  {tableState.team ? (
+                    <IconContext.Provider value={{ size: "15px" }}>
+                      <FaArrowUp />
+                    </IconContext.Provider>
+                  ) : (
+                    <IconContext.Provider value={{ size: "15px" }}>
+                      <FaArrowDown />
+                    </IconContext.Provider>
+                  )}
+                </div>
               </th>
               <th scope="col" className="px-6 py-3">
                 Leírás
@@ -80,7 +139,7 @@ export default function Kedvencek() {
                 <td className="px-6 py-4">{kosaras.introduction}</td>
                 <td className="px-6 py-4">
                   <div
-                    className="text-linkcolor flex justify-center p-2 underline hover:cursor-pointer"
+                    className="flex justify-center p-2 text-linkcolor underline hover:cursor-pointer"
                     onClick={() => navigate("/kosarasok/" + kosaras.ID)}
                   >
                     <a>Ugrás</a>
