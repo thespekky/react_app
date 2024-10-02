@@ -11,6 +11,8 @@ Kosarasok.init(
     team: { type: DataTypes.STRING },
     image: { type: DataTypes.STRING },
     introduction: { type: DataTypes.STRING },
+    start_date: { type: DataTypes.DATE },
+    end_date: { type: DataTypes.DATE },
   },
   {
     sequelize,
