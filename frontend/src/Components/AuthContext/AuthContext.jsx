@@ -31,7 +31,6 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const login = (datas) => {
-    console.log(datas.id);
     cookies.set("userData", datas, { path: "/" });
     setLoggedUser({
       id: datas.id,
@@ -41,6 +40,7 @@ export const AuthProvider = ({ children }) => {
       admin: datas.admin,
     });
     setIsLoggedIn(true);
+    navigate("/");
   };
   const logout = () => {
     if (isLoggedIn) {

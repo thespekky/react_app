@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const sequelize = require("../Models/dbModell");
 const { QueryTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
+const Users = require("../Models/User.Modell");
+const RefreshToken = require("../Models/RefreshToken.Modell");
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -12,20 +14,18 @@ exports.login = async (req, res) => {
         success: false,
       });
     }
-    const user = await sequelize.query(
-      "SELECT ID, username, name, email,admin,password FROM users WHERE email=:Email",
-      {
-        replacements: { Email: email },
-        type: QueryTypes.SELECT,
-      }
-    );
-    if (user.length == 0) {
+    const user = await Users.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (user == null) {
       return res.status(404).send({
         message: "Nincs ilyen felhasználó",
         success: false,
       });
     }
-    if (!(await bcrypt.compare(password, user[0].password))) {
+    if (!(await bcrypt.compare(password, user.password))) {
       return res.status(404).send({
         message: "Hibás jelszó ",
         success: false,
@@ -37,15 +37,13 @@ exports.login = async (req, res) => {
       process.env.ACCESS_TOKEN_KEY,
       { expiresIn: "20m" }
     );
-    const reftokenvane = await sequelize.query(
-      "SELECT refreshtoken FROM refreshtoken WHERE email=:Email",
-      {
-        replacements: { Email: email },
-        type: QueryTypes.SELECT,
-      }
-    );
+    const reftokenvane = await RefreshToken.findOne({
+      where: {
+        email: email,
+      },
+    });
     let refreshToken;
-    if (reftokenvane.length != 0) {
+    if (reftokenvane != null) {
       refreshToken = reftokenvane;
     } else {
       refreshToken = jwt.sign(
@@ -53,16 +51,12 @@ exports.login = async (req, res) => {
         process.env.REFRESS_TOKEN_KEY
       );
       const t = await sequelize.transaction();
-      const reftoken = await sequelize.query(
-        "INSERT INTO refreshtoken (email, refreshtoken) VALUES (:Email, :Token)",
+      const reftoken = await RefreshToken.create(
         {
-          replacements: {
-            Email: email,
-            Token: refreshToken,
-          },
-          type: QueryTypes.INSERT,
-          transaction: t,
-        }
+          email: email,
+          refreshtoken: refreshToken,
+        },
+        { transaction: t }
       );
       if (!reftoken) {
         await t.rollback();
@@ -126,13 +120,11 @@ exports.refreshtoken = async (req, res) => {
         .status(404)
         .send({ message: "Hibási refreshtoken", success: false });
     }
-    const reftoken = await sequelize.query(
-      "SELECT email,refreshtoken FROM refreshtoken WHERE refreshtoken=:Token",
-      {
-        replacements: { Token: refreshtoken },
-        type: QueryTypes.SELECT,
-      }
-    );
+    const reftoken = await RefreshToken.findOne({
+      where: {
+        refreshtoken: refreshtoken,
+      },
+    });
     if (!reftoken) {
       return res.status(404).send({
         message: "Nincs ilyen refreshtoken az adatbázisban",
@@ -174,31 +166,26 @@ exports.register = async (req, res) => {
   try {
     const { username, name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const vane_user = await sequelize.query(
-      "SELECT email FROM users WHERE email=:Email",
-      {
-        replacements: { Email: email },
-        type: QueryTypes.SELECT,
-      }
-    );
-    if (vane_user.length != 0) {
+    const vane_user = await Users.findOne({
+      where: {
+        email: email,
+      },
+    });
+    if (vane_user != null) {
       await t.rollback();
       return res
         .status(400)
         .send({ message: "Van ilyen felhasználó", success: false });
     }
-    const user = await sequelize.query(
-      "INSERT INTO users (username, name, email, password,admin) VALUES (:Username, :Name, :Email, :Password,0)",
+    const user = await Users.create(
       {
-        replacements: {
-          Username: username,
-          Name: name,
-          Email: email,
-          Password: hashedPassword,
-        },
-        type: QueryTypes.INSERT,
-        transaction: t,
-      }
+        username: username,
+        name: name,
+        email: email,
+        password: hashedPassword,
+        admin: 0,
+      },
+      { transaction: t }
     );
     if (!user) {
       await t.rollback();

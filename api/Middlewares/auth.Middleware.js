@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const sequelize = require("../Models/dbModell");
 const { QueryTypes } = require("sequelize");
+const Users = require("../Models/User.Modell");
 exports.auth = async (req, res, next) => {
   try {
     const authtoken = req.headers.authtoken
@@ -15,13 +16,15 @@ exports.auth = async (req, res, next) => {
         .status(400)
         .send({ message: "Hibás token/Lejárt token", success: false });
     }
-    const user = await sequelize.query(
-      "SELECT ID, username, name, email,admin FROM users WHERE email=:Email",
-      {
-        replacements: { Email: data.email },
-        type: QueryTypes.SELECT,
-      }
-    );
+    const user = await Users.findOne({
+      where: {
+        email: data.email,
+      },
+      attributes: {
+        exclude: ["password"],
+      },
+    });
+
     if (!user) {
       return res
         .status(404)

@@ -44,7 +44,7 @@ export default function Kosaras() {
   const GetData = async () => {
     const data = await GetOneData("/kosarasok/" + id);
     if (data.kosaras) {
-      setKosaras(data.kosaras[0]);
+      setKosaras(data.kosaras);
     } else {
       showAlert(data.message, "danger");
     }
@@ -90,9 +90,10 @@ export default function Kosaras() {
       setKedvenc(false);
     } else {
       setKedvenc(true);
-      const response = await PostData("/kedvenc/add", {
+      const response = await PostData("/kedvencek", {
+        email: cookie.get("userData").email,
         user_id: cookie.get("userData").id,
-        kosaras_id: id,
+        kosarasok_id: id,
       });
       if (response.success) {
         showAlert(response.message, "success");

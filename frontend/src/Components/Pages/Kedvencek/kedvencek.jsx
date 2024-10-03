@@ -49,6 +49,7 @@ export default function Kedvencek() {
       });
       if (response.success) {
         showAlert(response.message, "success");
+        getKedvencek();
       }
     }
   }

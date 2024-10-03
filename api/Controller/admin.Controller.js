@@ -1,20 +1,14 @@
 const sequelize = require("../Models/dbModell");
 const { QueryTypes } = require("sequelize");
+const Users = require("../Models/User.Modell");
 exports.getusers = async (req, res) => {
   try {
-    if (req.user[0].admin == 1) {
-      const users = await sequelize.query(
-        "SELECT ID, username, name, email,admin FROM users",
-        {
-          replacements: {},
-          type: QueryTypes.SELECT,
-        }
-      );
-      if (users.length == 0) {
-        return res
-          .status(200)
-          .send({ message: "Hibás select", success: false });
-      }
+    if (req.user.admin == 1) {
+      const users = await Users.findAll({
+        atributes: {
+          exclude: ["password"],
+        },
+      });
       return res.status(200).send({ users: users, success: true });
     }
     return res
